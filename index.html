@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>载熙工具箱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* 流体金属效果头部 */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 增强液态金属渐变效果 */
+        .fluid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff3300, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #9900ff, #ff3300);
+            background-size: 600% auto;
+            z-index: -1;
+            background-position: 0% center;
+            animation: shine 60s ease-in-out infinite alternate; /* 使用alternate确保平滑反向过渡 */
+
+            /* 添加径向渐变增强深度感 */
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%),
+                             linear-gradient(90deg, #ff3300, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #9900ff, #ff3300);
+
+            /* 添加金属光泽效果 */
+            box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 鼠标水波效果 */
+        .mouse-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff3300, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #9900ff, #ff3399);
+            background-size: 600% 600%;
+            transform: scale(0);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        @keyframes mouseRipple {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* 移除斜线纹理 */
+        .metal-overlay {
+            display: none;
+        }
+
+        /* 移除背景动画 */
+
+        /* 添加液体波纹效果 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0);
+            animation: ripple 6s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .title {
+            font-size: 5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: black;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
+            animation: textShine 5s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+        }
+
+        @keyframes textShine {
+            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 153, 0, 0.3); }
+            25% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 25px rgba(255, 255, 0, 0.4); }
+            50% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 255, 0, 0.3); }
+            75% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 25px rgba(0, 0, 255, 0.4); }
+            100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(153, 0, 255, 0.3); }
+        }
+
+        .title span {
+            display: inline-block;
+            transition: transform 0.3s ease-out;
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        /* 网址大全模态框样式 */
+        .website-modal, .converter-modal {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 1000;
+            overflow-y: auto;
+            transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 2rem;
+            box-sizing: border-box; /* 确保padding不会增加总宽度 */
+        }
+
+        .converter-modal.active,
+        .website-modal.active {
+            right: 0;
+            transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .website-modal.active {
+            right: 0;
+            transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 0.5倍速滑动效果 */
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button {
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-right: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e94560;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: #e94560;
+            border-left: 4px solid #e94560;
+            padding-left: 1rem;
+        }
+
+        .website-list {
+            list-style: none;
+        }
+
+        .website-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .website-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .website-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .website-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .website-info {
+            flex: 1;
+        }
+
+        .website-name {
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .website-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: none; /* 默认不显示描述 */
+        }
+
+        .website-item.expanded .website-desc {
+            display: block;
+        }
+
+        .visit-button {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .visit-button:hover {
+            background: #4CAF50;
+        }
+
+        .website-detail {
+            display: none;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        /* 向下箭头 */
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow::before {
+            content: '';
+            width: 1rem;
+            height: 1rem;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* 工具选项区域 */
+        .tools-container {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .tools-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tools-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #e94560;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #e94560;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fluid-background"></div>
+
+    <header class="hero">
+        <!-- 动态生成的波纹元素将通过JS添加 -->
+        <h1 class="title" id="mainTitle">载熙工具箱</h1>
+        <p class="hero-subtitle">一站式实用工具集合，提供转换工具、系统工具、编码工具、镜像大全、网址大全等多种实用功能，满足您的各种需求。</p>
+        <div class="scroll-arrow" id="scrollArrow"></div>
+    </header>
+
+    <section class="tools-container" id="toolsContainer">
+        <h2 class="tools-title">选择工具</h2>
+        <div class="tools-grid">
+            <div class="tool-card" id="officeTool">
+                <div class="tool-icon">⚙️</div>
+                <h3 class="tool-name">办公工具</h3>
+            </div>
+            <div class="tool-card" id="systemTool">
+                <div class="tool-icon">🖥️</div>
+                <h3 class="tool-name">系统工具</h3>
+            </div>
+            <div class="tool-card" id="codingTool">
+                <div class="tool-icon">🐍</div>
+                <h3 class="tool-name">编码工具</h3>
+            </div>
+            <div class="tool-card" id="imageTool">
+                <div class="tool-icon">💿</div>
+                <h3 class="tool-name">镜像大全</h3>
+            </div>
+            <div class="tool-card" id="websiteTool">
+                <div class="tool-icon">🌐</div>
+                <h3 class="tool-name">网址大全</h3>
+            </div>
+            <div class="tool-card" id="otherTool">
+                <div class="tool-icon">🔧</div>
+                <h3 class="tool-name">其他工具</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- 办公工具模态框 -->
+    <div class="converter-modal" id="officeModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="officeBackButton">&lt;</button>
+                <h2 class="modal-title">办公工具下载</h2>
+            </div>
+
+            <h3 class="category-title">常用转换工具</h3>
+            <ul class="website-list" id="converterTools">
+                <li class="website-item" data-url="https://southfront.mm.fcix.net/tdf/libreoffice/stable/25.2.5/win/x86_64/LibreOffice_25.2.5_Win_x86-64.msi" data-desc="LibreOffice是一款开源的办公软件套件，包含Writer、Calc、Impress等组件，支持多种文件格式转换。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.libreoffice.org" alt="LibreOffice图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">LibreOffice</div>
+                        <div class="website-desc">LibreOffice是一款开源的办公软件套件，包含Writer、Calc、Impress等组件，支持多种文件格式转换。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://southfront.mm.fcix.net/tdf/libreoffice/stable/25.2.5/win/x86_64/LibreOffice_25.2.5_Win_x86-64.msi', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://www.sumatrapdfreader.org/download-free-pdf-viewer.html" data-desc="Sumatra PDF是一款开源的轻量级PDF阅读器，体积小巧，启动速度快，支持多种文档格式。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.sumatrapdfreader.org" alt="Sumatra PDF图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">Sumatra PDF</div>
+                        <div class="website-desc">Sumatra PDF是一款开源的轻量级PDF阅读器，体积小巧，启动速度快，支持多种文档格式。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.sumatrapdfreader.org/download-free-pdf-viewer.html', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://www.tracker-software.com/product/pdf-xchange-editor" data-desc="PDF-XChange Editor是一款功能强大的PDF编辑器，支持注释、编辑、OCR识别等多种功能。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.tracker-software.com" alt="PDF-XChange Editor图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">PDF-XChange Editor</div>
+                        <div class="website-desc">PDF-XChange Editor是一款功能强大的PDF编辑器，支持注释、编辑、OCR识别等多种功能。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.tracker-software.com/product/pdf-xchange-editor', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://official-package.wpscdn.cn/wps/download/WPS_Setup_21915.exe" data-desc="WPS是一款功能强大的办公软件套件，包含文字、表格、演示等组件，兼容多种文件格式。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.wps.com" alt="WPS图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">WPS</div>
+                        <div class="website-desc">WPS是一款功能强大的办公软件套件，包含文字、表格、演示等组件，兼容多种文件格式。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://official-package.wpscdn.cn/wps/download/WPS_Setup_21915.exe', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://mirrors.sdu.edu.cn/github-release/YerongAI_Office-Tool/v10.24.68.0/Office_Tool_with_runtime_v10.24.68.0_x64.zip" data-desc="YerongAI Office Tool是一款实用的办公工具，提供Office相关的功能和工具。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://github.com/YerongAI/Office-Tool" alt="YerongAI Office Tool图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">YerongAI Office Tool</div>
+                        <div class="website-desc">YerongAI Office Tool是一款实用的办公工具，提供Office相关的功能和工具。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://mirrors.sdu.edu.cn/github-release/YerongAI_Office-Tool/v10.24.68.0/Office_Tool_with_runtime_v10.24.68.0_x64.zip', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://xmind.cn/download/" data-desc="XMind是一款功能强大的思维导图软件，支持多种思维导图结构、多格式导出、头脑风暴等功能，适用于学习和工作场景。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://xmind.cn" alt="XMind图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">XMind</div>
+                        <div class="website-desc">XMind是一款功能强大的思维导图软件，支持多种思维导图结构、多格式导出、头脑风暴等功能，适用于学习和工作场景。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://xmind.cn/download/', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://sourceforge.net/projects/dia-installer/" data-desc="Dia Diagram Editor是一款开源的流程图绘制软件，支持多种图表类型、多格式导出，适用于架构图、流程图等文档绘制。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://sourceforge.net" alt="Dia Diagram Editor图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">Dia Diagram Editor</div>
+                        <div class="website-desc">Dia Diagram Editor是一款开源的流程图绘制软件，支持多种图表类型、多格式导出，适用于架构图、流程图等文档绘制。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://sourceforge.net/projects/dia-installer/', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://www.dida365.com/download" data-desc="滴答清单是一款高效的任务管理与日程规划工具，支持多平台同步、智能识别、全能提醒、日历视图和团队协作等功能。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.dida365.com" alt="滴答清单图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">滴答清单</div>
+                        <div class="website-desc">滴答清单是一款高效的任务管理与日程规划工具，支持多平台同步、智能识别、全能提醒、日历视图和团队协作等功能。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.dida365.com/download', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://shimo.im/download" data-desc="石墨文档是一款支持多人实时协作的云端办公软件，支持文档、表格、幻灯片等多种格式，跨平台同步。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://shimo.im" alt="石墨文档图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">石墨文档</div>
+                        <div class="website-desc">石墨文档是一款支持多人实时协作的云端办公软件，支持文档、表格、幻灯片等多种格式，跨平台同步。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://shimo.im/download', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://www.processon.com/" data-desc="ProcessOn是一款在线作图平台，支持流程图、思维导图、原型图、UML等多种图表类型，支持多人实时协作。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.processon.com" alt="ProcessOn图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">ProcessOn</div>
+                        <div class="website-desc">ProcessOn是一款在线作图平台，支持流程图、思维导图、原型图、UML等多种图表类型，支持多人实时协作。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.processon.com/', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://www.yinxiang.com/" data-desc="印象笔记是一款功能强大的知识管理与笔记工具，支持多设备同步、信息收集、高效记录和永久保存，被誉为'第二大脑'。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.yinxiang.com" alt="印象笔记图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">印象笔记</div>
+                        <div class="website-desc">印象笔记是一款功能强大的知识管理与笔记工具，支持多设备同步、信息收集、高效记录和永久保存，被誉为'第二大脑'。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.yinxiang.com/', '_blank');">下载</button>
+                </li>
+                <li class="website-item" data-url="https://docs.qq.com/" data-desc="腾讯文档是一款可协作的云端Office工具，支持多人实时编辑文档、表格、幻灯片等，无需下载客户端，打开网页即可使用。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://docs.qq.com" alt="腾讯文档图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">腾讯文档</div>
+                        <div class="website-desc">腾讯文档是一款可协作的云端Office工具，支持多人实时编辑文档、表格、幻灯片等，无需下载客户端，打开网页即可使用。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://docs.qq.com/', '_blank');">前往</button>
+                </li>
+            </ul>
+        </div>
+
+    <!-- 网址大全模态框 -->
+    <div class="website-modal" id="websiteModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="backButton">&lt;</button>
+                <h2 class="modal-title">网址大全</h2>
+            </div>
+
+            <h3 class="category-title">搜索引擎</h3>
+            <ul class="website-list" id="searchEngines">
+                <li class="website-item" data-url="https://www.baidu.com" data-desc="百度是中国最大的搜索引擎，提供网页、图片、视频等多种搜索服务。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.baidu.com" alt="百度图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">百度</div>
+                        <div class="website-desc">百度是中国最大的搜索引擎，提供网页、图片、视频等多种搜索服务。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.baidu.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://www.google.com" data-desc="谷歌是全球最大的搜索引擎，提供广泛的搜索服务和相关产品。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.google.com" alt="谷歌图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">谷歌</div>
+                        <div class="website-desc">谷歌是全球最大的搜索引擎，提供广泛的搜索服务和相关产品。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.google.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://www.sogou.com" data-desc="搜狗是中国的搜索引擎之一，以其输入法和搜索服务而知名。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.sogou.com" alt="搜狗图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">搜狗</div>
+                        <div class="website-desc">搜狗是中国的搜索引擎之一，以其输入法和搜索服务而知名。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.sogou.com', '_blank');">前往</button>
+                </li>
+            </ul>
+
+            <h3 class="category-title">视频网站</h3>
+            <ul class="website-list" id="videoSites">
+                <li class="website-item" data-url="https://www.bilibili.com" data-desc="哔哩哔哩是中国年轻人喜爱的视频分享网站，以动画、游戏、音乐等内容为主。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.bilibili.com" alt="哔哩哔哩图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">哔哩哔哩</div>
+                        <div class="website-desc">哔哩哔哩是中国年轻人喜爱的视频分享网站，以动画、游戏、音乐等内容为主。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.bilibili.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://www.youtube.com" data-desc="YouTube是全球最大的视频分享平台，拥有海量的视频内容。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com" alt="YouTube图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">YouTube</div>
+                        <div class="website-desc">YouTube是全球最大的视频分享平台，拥有海量的视频内容。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.youtube.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://v.qq.com" data-desc="腾讯视频是中国领先的在线视频媒体平台，提供丰富的影视内容。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://v.qq.com" alt="腾讯视频图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">腾讯视频</div>
+                        <div class="website-desc">腾讯视频是中国领先的在线视频媒体平台，提供丰富的影视内容。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://v.qq.com', '_blank');">前往</button>
+                </li>
+            </ul>
+
+            <h3 class="category-title">代码与开发</h3>
+            <ul class="website-list" id="devSites">
+                <li class="website-item" data-url="https://github.com" data-desc="GitHub是全球最大的代码托管平台和开发者社区。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://github.com" alt="GitHub图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">GitHub</div>
+                        <div class="website-desc">GitHub是全球最大的代码托管平台和开发者社区。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://github.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://stackoverflow.com" data-desc="Stack Overflow是程序员常用的问答社区，解决各种编程问题。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://stackoverflow.com" alt="Stack Overflow图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">Stack Overflow</div>
+                        <div class="website-desc">Stack Overflow是程序员常用的问答社区，解决各种编程问题。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://stackoverflow.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://developer.mozilla.org" data-desc="MDN Web Docs提供权威的Web技术文档和教程。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://developer.mozilla.org" alt="MDN Web Docs图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">MDN Web Docs</div>
+                        <div class="website-desc">MDN Web Docs提供权威的Web技术文档和教程。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://developer.mozilla.org', '_blank');">前往</button>
+                </li>
+            </ul>
+
+            <h3 class="category-title">实用工具</h3>
+            <ul class="website-list" id="utilitySites">
+                <li class="website-item" data-url="https://www.baidu.com/s?wd=%E5%A4%A9%E6%B0%94" data-desc="百度天气提供全国各地的天气查询服务。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.baidu.com" alt="天气查询图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">天气查询</div>
+                        <div class="website-desc">百度天气提供全国各地的天气查询服务。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.baidu.com/s?wd=%E5%A4%A9%E6%B0%94', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://translate.google.com" data-desc="谷歌翻译提供多种语言之间的翻译服务。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://translate.google.com" alt="谷歌翻译图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">谷歌翻译</div>
+                        <div class="website-desc">谷歌翻译提供多种语言之间的翻译服务。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://translate.google.com', '_blank');">前往</button>
+                </li>
+                <li class="website-item" data-url="https://www.12306.cn" data-desc="12306是中国铁路客户服务网站，提供火车票查询和购买服务。">
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=https://www.12306.cn" alt="12306图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">12306</div>
+                        <div class="website-desc">12306是中国铁路客户服务网站，提供火车票查询和购买服务。</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.12306.cn', '_blank');">前往</button>
+                </li>
+            </ul>
+        </div>
+<!-- 系统工具模态框 -->
+        <div class="converter-modal" id="systemModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="systemBackButton">&lt;</button>
+                <h2 class="modal-title">系统工具下载</h2>
+            </div>
+            <div class="tools-grid" id="systemTools">
+                <!-- 系统工具条目将通过JavaScript动态添加 -->
+            </div>
+        </div>
+<!-- 编码工具模态框 -->
+        <div class="converter-modal" id="codingModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="codingBackButton">&lt;</button>
+                <h2 class="modal-title">编码工具下载</h2>
+            </div>
+            <div class="tools-grid" id="codingTools">
+                <!-- 编码工具条目将通过JavaScript动态添加 -->
+            </div>
+        </div>
+<!-- 镜像大全模态框 -->
+        <div class="converter-modal" id="imageModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="imageBackButton">&lt;</button>
+                <h2 class="modal-title">镜像大全下载</h2>
+            </div>
+            <div class="tools-grid" id="imageTools">
+                <!-- 镜像大全条目将通过JavaScript动态添加 -->
+            </div>
+        </div>
+<!-- 其他工具模态框 -->
+        <div class="converter-modal" id="otherModal">
+            <div class="modal-header">
+                <button type="button" class="back-button" id="otherBackButton">&lt;</button>
+                <h2 class="modal-title">其他工具下载</h2>
+            </div>
+            <div class="tools-grid" id="otherTools">
+                <!-- 其他工具条目将通过JavaScript动态添加 -->
+            </div>
+        </div>
+
+    <script>
+        // 网址大全功能
+        const websiteTool = document.getElementById('websiteTool');
+        const websiteModal = document.getElementById('websiteModal');
+        const backButton = document.getElementById('backButton');
+        const websiteItems = document.querySelectorAll('.website-item');
+
+        // 打开网址大全
+        websiteTool.addEventListener('click', function() {
+            websiteModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭网址大全的函数
+        function closeWebsiteModal() {
+            websiteModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        backButton.addEventListener('click', closeWebsiteModal);
+
+        // 点击模态框外部关闭
+        websiteModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWebsiteModal();
+            }
+        });
+
+        // 点击网址项显示/隐藏详情
+        websiteItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // 办公工具功能
+        const officeTool = document.getElementById('officeTool');
+        const officeModal = document.getElementById('officeModal');
+        const officeBackButton = document.getElementById('officeBackButton');
+        const officeItems = document.querySelectorAll('#converterTools .website-item');
+
+        // 打开办公工具
+        officeTool.addEventListener('click', function() {
+            officeModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭办公工具的函数
+        function closeOfficeModal() {
+            officeModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        officeBackButton.addEventListener('click', closeOfficeModal);
+
+        // 点击模态框外部关闭
+        officeModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOfficeModal();
+            }
+        });
+
+        // 点击办公工具项显示/隐藏详情
+        officeItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // 系统工具功能
+        const systemTool = document.getElementById('systemTool');
+        const systemModal = document.getElementById('systemModal');
+        const systemBackButton = document.getElementById('systemBackButton');
+
+        // 打开系统工具
+        systemTool.addEventListener('click', function() {
+            systemModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭系统工具的函数
+        function closeSystemModal() {
+            systemModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        systemBackButton.addEventListener('click', closeSystemModal);
+
+        // 点击模态框外部关闭
+        systemModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSystemModal();
+            }
+        });
+
+        // 编码工具功能
+        const codingTool = document.getElementById('codingTool');
+        const codingModal = document.getElementById('codingModal');
+        const codingBackButton = document.getElementById('codingBackButton');
+
+        // 打开编码工具
+        codingTool.addEventListener('click', function() {
+            codingModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭编码工具的函数
+        function closeCodingModal() {
+            codingModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        codingBackButton.addEventListener('click', closeCodingModal);
+
+        // 点击模态框外部关闭
+        codingModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCodingModal();
+            }
+        });
+
+        // 镜像大全功能
+        const imageTool = document.getElementById('imageTool');
+        const imageModal = document.getElementById('imageModal');
+        const imageBackButton = document.getElementById('imageBackButton');
+
+        // 打开镜像大全
+        imageTool.addEventListener('click', function() {
+            imageModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭镜像大全的函数
+        function closeImageModal() {
+            imageModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        imageBackButton.addEventListener('click', closeImageModal);
+
+        // 点击模态框外部关闭
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // 其他工具功能
+        const otherTool = document.getElementById('otherTool');
+        const otherModal = document.getElementById('otherModal');
+        const otherBackButton = document.getElementById('otherBackButton');
+
+        // 打开其他工具
+        otherTool.addEventListener('click', function() {
+            otherModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭其他工具的函数
+        function closeOtherModal() {
+            otherModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 返回按钮功能
+        otherBackButton.addEventListener('click', closeOtherModal);
+
+        // 点击模态框外部关闭
+        otherModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOtherModal();
+            }
+        });
+
+        // 滚动箭头点击事件
+        // 滚动箭头点击事件
+        document.getElementById('scrollArrow').addEventListener('click', function() {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+
+        // 滚动监听事件
+        window.addEventListener('scroll', function() {
+            const toolsContainer = document.getElementById('toolsContainer');
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const maxScroll = documentHeight - windowHeight;
+            const scrollProgress = Math.min(Math.max(scrollPosition / maxScroll, 0), 1);
+
+            // 当滚动超过窗口高度的30%时开始显示
+            if (scrollPosition > windowHeight * 0.3) {
+                const opacity = Math.min((scrollPosition - windowHeight * 0.3) / (windowHeight * 0.4), 1);
+                toolsContainer.style.opacity = opacity;
+                toolsContainer.style.transform = `translateY(${50 * (1 - opacity)}px)`;
+            } else {
+                toolsContainer.style.opacity = 0;
+                toolsContainer.style.transform = 'translateY(50px)';
+            }
+        });
+
+        // 页面加载时检查一次滚动位置
+        window.addEventListener('load', function() {
+            if (window.scrollY > window.innerHeight * 0.7) {
+                document.getElementById('toolsContainer').classList.add('visible');
+            }
+
+            // 初始化标题文字为独立span元素
+            initTitleLetters();
+
+            // 生成液体波纹效果
+            createRipples();
+        });
+
+        // 初始化标题文字为独立span元素
+        function initTitleLetters() {
+            const title = document.querySelector('.title');
+            const text = title.textContent;
+            title.textContent = '';
+
+            for (let i = 0; i < text.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = text[i];
+                span.dataset.index = i;
+                title.appendChild(span);
+            }
+
+            // 添加鼠标移动事件监听
+            title.addEventListener('mousemove', handleTitleMouseMove);
+            title.addEventListener('mouseleave', resetTitleLetters);
+        }
+
+        // 处理标题鼠标移动事件
+        function handleTitleMouseMove(e) {
+            const title = e.currentTarget;
+            const letters = title.querySelectorAll('span');
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const titleRect = title.getBoundingClientRect();
+            const titleCenterX = titleRect.left + titleRect.width / 2;
+            const titleCenterY = titleRect.top + titleRect.height / 2;
+
+            letters.forEach(letter => {
+                const rect = letter.getBoundingClientRect();
+                const letterX = rect.left + rect.width / 2;
+                const letterY = rect.top + rect.height / 2;
+                const dx = mouseX - letterX;
+                const dy = mouseY - letterY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // 计算鼠标相对于标题中心的位置
+                const relX = mouseX - titleCenterX;
+                const relY = mouseY - titleCenterY;
+                const angle = Math.atan2(relY, relX);
+
+                // 如果字母离鼠标较近，则向相反方向移动字母
+                if (distance < 120) {
+                    const force = 1 - (distance / 120);
+                    // 向鼠标相反方向移动，距离缩小为原来的60%
+                    const moveX = Math.cos(angle + Math.PI) * force * 12;
+                    const moveY = Math.sin(angle + Math.PI) * force * 8;
+                    letter.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } else {
+                    letter.style.transform = 'translate(0, 0)';
+                }
+            });
+        }
+
+        // 重置标题文字位置
+        function resetTitleLetters() {
+            const letters = document.querySelectorAll('.title span');
+            letters.forEach(letter => {
+                letter.style.transform = 'translate(0, 0)';
+            });
+        }
+
+        // 鼠标移动背景波纹效果
+        document.addEventListener('mousemove', function(e) {
+            createMouseRipple(e.clientX, e.clientY);
+        });
+
+        // 创建鼠标波纹
+        function createMouseRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.classList.add('mouse-ripple');
+
+            // 随机大小 - 非常小
+            const size = Math.random() * 3 + 2;
+
+            // 设置样式
+            ripple.style.left = `${x - size/2}px`;
+            ripple.style.top = `${y - size/2}px`;
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            ripple.style.animation = `mouseRipple ${1.5 + Math.random() * 1}s ease-out forwards`;
+
+            document.body.appendChild(ripple);
+
+            // 动画结束后移除元素
+            setTimeout(() => {
+                ripple.remove();
+            }, 3000);
+        }
+
+        // 调用函数生成更多网址并添加到DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            const websitesData = generateMoreWebsites();
+            addWebsitesToDOM(websitesData);
+        });
+
+        // 将网址数据添加到DOM
+        function addWebsitesToDOM(data) {
+            // 添加视频网站
+            const videoContainer = document.getElementById('videoSites');
+            data.videoSites.forEach(website => {
+                const li = document.createElement('li');
+                li.className = 'website-item';
+                li.dataset.url = website.url;
+                li.dataset.desc = website.desc;
+                li.innerHTML = `
+                    <div class="website-icon"><img src="https://www.google.com/s2/favicons?domain=${website.url}" alt="${website.name}图标"></div>
+                    <div class="website-info">
+                        <div class="website-name">${website.name}</div>
+                        <div class="website-desc">${website.desc}</div>
+                    </div>
+                    <button class="visit-button" onclick="event.stopPropagation(); window.open('${website.url}', '_blank');">前往</button>
+                `;
+                li.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+                videoContainer.appendChild(li);
+            });
+
+            // 添加搜索引擎
+            const searchContainer = document.getElementById('searchEngines');
+            data.searchEngines.forEach(website => {
+                const li = document.createElement('li');
+                li.className = 'website-item';
+                li.dataset.url = website.url;
+                li.dataset.desc = website.desc;
+                li.innerHTML = `
+                    <div class="website-icon">${website.icon}</div>
+                    <div class="website-info">
+                        <div class="website-name">${website.name}</div>
+                        <div class="website-desc">${website.desc}</div>
+                    </div>
+                    <button class="visit-button" onclick="event.stopPropagation(); window.open('${website.url}', '_blank');">前往</button>
+                `;
+                li.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+                searchContainer.appendChild(li);
+            });
+
+            // 添加代码与开发网站
+            const devContainer = document.getElementById('devSites');
+            data.devSites.forEach(website => {
+                const li = document.createElement('li');
+                li.className = 'website-item';
+                li.dataset.url = website.url;
+                li.dataset.desc = website.desc;
+                li.innerHTML = `
+                    <div class="website-icon">${website.icon}</div>
+                    <div class="website-info">
+                        <div class="website-name">${website.name}</div>
+                        <div class="website-desc">${website.desc}</div>
+                    </div>
+                    <button class="visit-button" onclick="event.stopPropagation(); window.open('${website.url}', '_blank');">前往</button>
+                `;
+                li.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+                devContainer.appendChild(li);
+            });
+
+            // 添加实用工具网站
+            const utilityContainer = document.getElementById('utilitySites');
+            data.utilitySites.forEach(website => {
+                const li = document.createElement('li');
+                li.className = 'website-item';
+                li.dataset.url = website.url;
+                li.dataset.desc = website.desc;
+                li.innerHTML = `
+                    <div class="website-icon">${website.icon}</div>
+                    <div class="website-info">
+                        <div class="website-name">${website.name}</div>
+                        <div class="website-desc">${website.desc}</div>
+                    </div>
+                    <button class="visit-button" onclick="event.stopPropagation(); window.open('${website.url}', '_blank');">前往</button>
+                `;
+                li.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+                utilityContainer.appendChild(li);
+            });
+        }
+
+        // 修复背景渐变动画 - 确保平滑过渡
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.querySelector('.fluid-background');
+            // 重置动画以确保平滑过渡
+            background.style.animation = 'none';
+            background.offsetHeight; // 触发重绘
+            background.style.animation = 'shine 60s ease-in-out infinite';
+        });
+
+        // 创建液体波纹效果
+        function createRipples() {
+            const body = document.body;
+            const rippleCount = 5; // 波纹数量
+
+            for (let i = 0; i < rippleCount; i++) {
+                setTimeout(() => {
+                    const ripple = document.createElement('div');
+                    ripple.classList.add('ripple');
+
+                    // 随机位置
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+
+                    // 随机大小
+                    const size = Math.random() * 300 + 100;
+
+                    // 随机延迟和持续时间
+                    const delay = Math.random() * 5;
+                    const duration = Math.random() * 15 + 10;
+
+                    // 设置样式
+                    ripple.style.left = `${x}%`;
+                    ripple.style.top = `${y}%`;
+                    ripple.style.width = `${size}px`;
+                    ripple.style.height = `${size}px`;
+                    ripple.style.animationDelay = `${delay}s`;
+                    ripple.style.animationDuration = `${duration}s`;
+                    ripple.style.zIndex = '0'; // 确保波纹在背景之上但在内容之下
+
+                    body.appendChild(ripple);
+
+                    // 动画结束后移除元素并创建新的
+                    setTimeout(() => {
+                        ripple.remove();
+                        createSingleRipple();
+                    }, (delay + duration) * 1000);
+                }, i * 3000);
+            }
+        }
+
+        // 生成更多网址数据 - 实际项目中可以从API获取
+        function generateMoreWebsites() {
+            // 视频网站数据
+            const videoSites = [
+                { name: '优酷', url: 'https://www.youku.com', desc: '优酷是中国领先的视频分享网站，提供丰富的影视内容。', icon: '🎬' },
+                { name: '爱奇艺', url: 'https://www.iqiyi.com', desc: '爱奇艺是中国知名的视频流媒体平台，拥有大量自制内容。', icon: '🎬' },
+                { name: '芒果TV', url: 'https://www.mgtv.com', desc: '芒果TV是湖南卫视的官方视频平台，提供卫视节目直播和点播。', icon: '🎬' },
+                { name: '乐视视频', url: 'https://www.letv.com', desc: '乐视视频提供影视、综艺、体育等内容的在线观看服务。', icon: '🎬' },
+                { name: 'PPTV', url: 'https://www.pptv.com', desc: 'PPTV聚力视频提供影视、体育、综艺等多种内容。', icon: '🎬' }
+            ];
+
+            // 搜索引擎数据
+            const searchEngines = [
+                { name: '360搜索', url: 'https://www.so.com', desc: '360搜索是360公司推出的搜索引擎服务。', icon: '🔍' },
+                { name: '必应', url: 'https://www.bing.com', desc: '必应是微软推出的搜索引擎，提供全球搜索服务。', icon: '🔍' },
+                { name: '雅虎', url: 'https://www.yahoo.com', desc: '雅虎是全球知名的互联网公司，提供搜索等多种服务。', icon: '🔍' }
+            ];
+
+            // 代码与开发数据
+            const devSites = [
+                { name: '掘金', url: 'https://juejin.cn', desc: '掘金是中国领先的技术社区，聚集了大量开发者。', icon: '💻' },
+                { name: 'CSDN', url: 'https://www.csdn.net', desc: 'CSDN是中国最大的IT社区和服务平台。', icon: '💻' },
+                { name: '码云', url: 'https://gitee.com', desc: '码云是中国的代码托管平台，类似于GitHub。', icon: '💻' },
+                { name: 'GitLab', url: 'https://about.gitlab.com', desc: 'GitLab是一个开源的代码托管和协作平台。', icon: '💻' },
+                { name: 'npm', url: 'https://www.npmjs.com', desc: 'npm是JavaScript的包管理工具。', icon: '💻' }
+            ];
+
+            // 实用工具数据
+            const utilitySites = [
+                { name: '百度地图', url: 'https://map.baidu.com', desc: '百度地图提供地图查询、导航等服务。', icon: '🗺️' },
+                { name: '高德地图', url: 'https://ditu.amap.com', desc: '高德地图提供专业的地图导航服务。', icon: '🗺️' },
+                { name: '快递查询', url: 'https://www.kuaidi100.com', desc: '快递100提供多家快递公司的物流查询服务。', icon: '📦' },
+                { name: '在线翻译', url: 'https://fanyi.baidu.com', desc: '百度翻译提供多种语言的在线翻译服务。', icon: '🌐' },
+                { name: '计算器', url: 'https://www.calculator.net', desc: '在线计算器提供各种计算功能。', icon: '🧮' },
+                { name: '日期计算器', url: 'https://www.timeanddate.com/date/duration.html', desc: '提供日期计算、时间转换等功能。', icon: '📅' },
+                { name: '单位转换', url: 'https://www.unitconverters.net', desc: '提供各种单位之间的转换工具。', icon: '📏' },
+                { name: '二维码生成器', url: 'https://cli.im', desc: '提供二维码生成和解析服务。', icon: '🔲' },
+                { name: '在线PS', url: 'https://www.photopea.com', desc: '基于网页的图片编辑工具，功能类似Photoshop。', icon: '🎨' },
+                { name: '文档转换', url: 'https://smallpdf.com/cn', desc: '提供PDF与其他格式文档的转换服务。', icon: '📄' },
+                { name: '草料二维码', url: 'https://cli.im', desc: '提供二维码生成、美化、解析等服务。', icon: '🔲' },
+                { name: '网易云音乐', url: 'https://music.163.com', desc: '网易云音乐是中国受欢迎的音乐流媒体平台。', icon: '🎵' },
+                { name: 'QQ音乐', url: 'https://y.qq.com', desc: 'QQ音乐提供海量音乐资源和在线播放服务。', icon: '🎵' },
+                { name: '百度文库', url: 'https://wenku.baidu.com', desc: '百度文库是在线文档分享平台。', icon: '📚' },
+                { name: '道客巴巴', url: 'https://www.doc88.com', desc: '道客巴巴是专业的文档分享平台。', icon: '📚' },
+                { name: '知乎', url: 'https://www.zhihu.com', desc: '知乎是中国知名的问答社区。', icon: '❓' },
+                { name: '豆瓣', url: 'https://www.douban.com', desc: '豆瓣是中国的社交网络服务平台，涵盖图书、电影、音乐等领域。', icon: '📚' },
+                { name: '微博', url: 'https://weibo.com', desc: '微博是中国流行的社交媒体平台。', icon: '🔔' },
+                { name: '微信公众平台', url: 'https://mp.weixin.qq.com', desc: '微信公众平台是微信公众号的管理后台。', icon: '📱' },
+                { name: '腾讯文档', url: 'https://docs.qq.com', desc: '腾讯文档是在线协作办公工具。', icon: '📝' },
+                { name: '石墨文档', url: 'https://shimo.im', desc: '石墨文档是在线协作编辑平台。', icon: '📝' },
+                { name: '腾讯会议', url: 'https://meeting.tencent.com', desc: '腾讯会议提供在线视频会议服务。', icon: '💻' },
+                { name: '钉钉', url: 'https://www.dingtalk.com', desc: '钉钉是阿里巴巴推出的企业级通讯与协同平台。', icon: '💼' },
+                { name: '飞书', url: 'https://www.feishu.cn', desc: '飞书是字节跳动推出的企业协作平台。', icon: '💼' },
+                { name: '阿里云', url: 'https://www.aliyun.com', desc: '阿里云是阿里巴巴集团提供的云计算服务。', icon: '☁️' },
+                { name: '腾讯云', url: 'https://cloud.tencent.com', desc: '腾讯云是腾讯公司提供的云计算服务。', icon: '☁️' },
+                { name: '华为云', url: 'https://www.huaweicloud.com', desc: '华为云是华为公司提供的云计算服务。', icon: '☁️' },
+                { name: '京东', url: 'https://www.jd.com', desc: '京东是中国知名的电子商务平台。', icon: '🛒' },
+                { name: '淘宝', url: 'https://www.taobao.com', desc: '淘宝是中国最大的电子商务平台。', icon: '🛒' },
+                { name: '拼多多', url: 'https://www.pinduoduo.com', desc: '拼多多是中国新兴的电子商务平台，以低价和拼团模式著称。', icon: '🛒' },
+                { name: '天猫', url: 'https://www.tmall.com', desc: '天猫是阿里巴巴集团旗下的B2C电子商务平台。', icon: '🛒' },
+                { name: '亚马逊', url: 'https://www.amazon.com', desc: '亚马逊是全球最大的电子商务和云计算公司。', icon: '🛒' },
+                { name: '当当网', url: 'https://www.dangdang.com', desc: '当当网是中国知名的网上书店。', icon: '📚' },
+                { name: '美团', url: 'https://www.meituan.com', desc: '美团提供外卖、酒店、旅游等本地生活服务。', icon: '🍔' },
+                { name: '饿了么', url: 'https://www.ele.me', desc: '饿了么是中国知名的在线外卖平台。', icon: '🍜' },
+                { name: '携程', url: 'https://www.ctrip.com', desc: '携程提供酒店预订、机票购买、旅游度假等服务。', icon: '✈️' },
+                { name: '去哪儿', url: 'https://www.qunar.com', desc: '去哪儿网提供机票、酒店、旅游产品的搜索和预订服务。', icon: '✈️' },
+                { name: '马蜂窝', url: 'https://www.mafengwo.cn', desc: '马蜂窝是旅游社交平台，提供旅游攻略、游记等内容。', icon: '🗺️' },
+                { name: '途牛', url: 'https://www.tuniu.com', desc: '途牛旅游网提供旅游产品预订服务。', icon: '🗺️' },
+                { name: '艺龙', url: 'https://www.elong.com', desc: '艺龙旅行网提供酒店预订、机票预订等服务。', icon: '🏨' },
+                { name: '12306', url: 'https://www.12306.cn', desc: '中国铁路客户服务网站，提供火车票查询和购买服务。', icon: '🚄' },
+                { name: '飞猪', url: 'https://www.fliggy.com', desc: '飞猪是阿里巴巴旗下的旅游服务平台。', icon: '✈️' },
+                { name: '智行', url: 'https://www.zhixing12306.com', desc: '智行火车票提供火车票查询、预订等服务。', icon: '🚄' },
+                { name: 'keep', url: 'https://www.gotokeep.com', desc: 'Keep是健身运动社区和工具应用。', icon: '🏋️' },
+                { name: '咕咚', url: 'https://www.codoon.com', desc: '咕咚是运动社交和健康管理平台。', icon: '🏃' },
+                { name: '得到', url: 'https://www.dedao.cn', desc: '得到是知识服务平台，提供精品课程和内容。', icon: '📚' },
+                { name: '喜马拉雅', url: 'https://www.ximalaya.com', desc: '喜马拉雅是音频分享平台，提供有声书、 podcasts等内容。', icon: '🎧' },
+                { name: '蜻蜓FM', url: 'https://www.qingting.fm', desc: '蜻蜓FM是音频内容平台，提供电台、有声书等服务。', icon: '🎧' },
+                { name: '懒人听书', url: 'https://www.lrts.me', desc: '懒人听书提供有声内容服务。', icon: '🎧' },
+                { name: '腾讯课堂', url: 'https://ke.qq.com', desc: '腾讯课堂是在线教育平台。', icon: '🎓' },
+                { name: '网易云课堂', url: 'https://study.163.com', desc: '网易云课堂提供在线课程和学习资源。', icon: '🎓' },
+                { name: '慕课网', url: 'https://www.imooc.com', desc: '慕课网是IT技能学习平台。', icon: '💻' },
+                { name: 'Coursera', url: 'https://www.coursera.org', desc: 'Coursera是全球知名的在线教育平台，提供大学课程。', icon: '🎓' },
+                { name: 'edX', url: 'https://www.edx.org', desc: 'edX是由哈佛大学和麻省理工学院联合创立的在线教育平台。', icon: '🎓' },
+                { name: 'Udemy', url: 'https://www.udemy.com', desc: 'Udemy是在线学习平台，提供各种技能课程。', icon: '🎓' },
+                { name: '哔哩哔哩课堂', url: 'https://class.bilibili.com', desc: '哔哩哔哩旗下的在线教育平台。', icon: '🎓' },
+                { name: '小猿搜题', url: 'https://www.xueersi.com', desc: '小猿搜题是中小学作业辅导平台。', icon: '📝' },
+                { name: '作业帮', url: 'https://www.zuoyebang.com', desc: '作业帮是中小学作业辅导和学习平台。', icon: '📝' },
+                { name: '西瓜视频', url: 'https://www.ixigua.com', desc: '西瓜视频是字节跳动旗下的视频分享平台。', icon: '🎬' },
+                { name: '抖音', url: 'https://www.douyin.com', desc: '抖音是流行的短视频分享平台。', icon: '🎵' },
+                { name: '快手', url: 'https://www.kuaishou.com', desc: '快手是中国知名的短视频平台。', icon: '🎵' },
+                { name: '小红书', url: 'https://www.xiaohongshu.com', desc: '小红书是生活方式分享平台。', icon: '📷' },
+                { name: '知乎', url: 'https://www.zhihu.com', desc: '知乎是问答社区，聚集了各领域的专业人士。', icon: '❓' },
+                { name: '豆瓣', url: 'https://www.douban.com', desc: '豆瓣是文化社区，涵盖图书、电影、音乐等领域。', icon: '📚' },
+                { name: '天涯社区', url: 'https://www.tianya.cn', desc: '天涯社区是中国知名的网络社区。', icon: '🌐' },
+                { name: '凯迪社区', url: 'https://www.cat898.com', desc: '凯迪社区是综合性网络论坛。', icon: '🌐' },
+                { name: '虎扑', url: 'https://www.hupu.com', desc: '虎扑是体育爱好者社区。', icon: '🏀' },
+                { name: 'NGA', url: 'https://bbs.nga.cn', desc: 'NGA是游戏玩家社区。', icon: '🎮' },
+                { name: 'AcFun', url: 'https://www.acfun.cn', desc: 'AcFun是视频弹幕网站。', icon: '🎬' },
+                { name: '斗鱼', url: 'https://www.douyu.com', desc: '斗鱼是游戏直播平台。', icon: '🎮' },
+                { name: '虎牙', url: 'https://www.huya.com', desc: '虎牙直播是游戏直播平台。', icon: '🎮' },
+                { name: '企鹅电竞', url: 'https://egame.qq.com', desc: '企鹅电竞是腾讯旗下的游戏直播平台。', icon: '🎮' },
+                { name: '战旗直播', url: 'https://www.zhanqi.tv', desc: '战旗直播是游戏直播平台。', icon: '🎮' },
+                { name: 'CC直播', url: 'https://cc.163.com', desc: 'CC直播是网易旗下的直播平台。', icon: '🎮' },
+                { name: 'bilibili直播', url: 'https://live.bilibili.com', desc: '哔哩哔哩旗下的直播平台。', icon: '🎮' },
+                { name: '4399', url: 'https://www.4399.com', desc: '4399是小游戏平台。', icon: '🎮' },
+                { name: '7k7k', url: 'https://www.7k7k.com', desc: '7k7k是小游戏平台。', icon: '🎮' },
+                { name: 'Steam', url: 'https://store.steampowered.com', desc: 'Steam是数字发行平台，主要销售电子游戏。', icon: '🎮' },
+                { name: 'Epic Games', url: 'https://www.epicgames.com', desc: 'Epic Games是游戏开发商和发行商，运营Epic Games Store。', icon: '🎮' },
+                { name: 'Origin', url: 'https://www.origin.com', desc: 'Origin是EA旗下的数字发行平台。', icon: '🎮' },
+                { name: 'Uplay', url: 'https://uplay.ubisoft.com', desc: 'Uplay是育碧旗下的数字发行平台。', icon: '🎮' },
+                { name: 'GOG', url: 'https://www.gog.com', desc: 'GOG是CD Projekt旗下的数字发行平台，专注于无DRM游戏。', icon: '🎮' },
+                { name: 'TapTap', url: 'https://www.taptap.com', desc: 'TapTap是移动游戏社区和分发平台。', icon: '🎮' },
+                { name: '好游快爆', url: 'https://www.3839.com', desc: '好游快爆是手游推荐和社区平台。', icon: '🎮' },
+                { name: '腾讯游戏', url: 'https://game.qq.com', desc: '腾讯游戏平台，提供腾讯旗下的游戏服务。', icon: '🎮' },
+                { name: '网易游戏', url: 'https://game.163.com', desc: '网易游戏平台，提供网易旗下的游戏服务。', icon: '🎮' },
+                { name: '盛大游戏', url: 'https://www.shandagames.com', desc: '盛大游戏是中国知名的游戏公司。', icon: '🎮' },
+                { name: '完美世界', url: 'https://www.wanmei.com', desc: '完美世界是游戏开发和运营公司。', icon: '🎮' },
+                { name: '巨人网络', url: 'https://www.ztgame.com', desc: '巨人网络是游戏开发和运营公司。', icon: '🎮' },
+                { name: '米哈游', url: 'https://www.mihoyo.com', desc: '米哈游是游戏开发公司，代表作有《原神》等。', icon: '🎮' },
+                { name: '莉莉丝游戏', url: 'https://www.lilith.com', desc: '莉莉丝游戏是游戏开发公司。', icon: '🎮' },
+                { name: '字节跳动游戏', url: 'https://game.bytedance.com', desc: '字节跳动旗下的游戏业务平台。', icon: '🎮' },
+                { name: '360游戏', url: 'https://game.360.cn', desc: '360游戏平台。', icon: '🎮' },
+                { name: '快手游戏', url: 'https://game.kuaishou.com', desc: '快手旗下的游戏业务平台。', icon: '🎮' },
+                { name: '京东云', url: 'https://www.jdcloud.com', desc: '京东云是京东集团提供的云计算服务。', icon: '☁️' },
+                { name: '百度智能云', url: 'https://cloud.baidu.com', desc: '百度智能云是百度提供的云计算服务。', icon: '☁️' },
+                { name: '天翼云', url: 'https://www.ctyun.cn', desc: '天翼云是中国电信提供的云计算服务。', icon: '☁️' },
+                { name: '移动云', url: 'https://ecloud.10086.cn', desc: '移动云是中国移动提供的云计算服务。', icon: '☁️' },
+                { name: '联通云', url: 'https://www.unicomcloud.com', desc: '联通云是中国联通提供的云计算服务。', icon: '☁️' },
+                { name: '七牛云', url: 'https://www.qiniu.com', desc: '七牛云是云计算和数据服务提供商。', icon: '☁️' },
+                { name: '又拍云', url: 'https://www.upyun.com', desc: '又拍云是云计算服务提供商，专注于CDN和云存储。', icon: '☁️' },
+                { name: '阿里云盘', url: 'https://www.aliyundrive.com', desc: '阿里云盘是阿里云提供的云存储服务。', icon: '☁️' },
+                { name: '百度网盘', url: 'https://pan.baidu.com', desc: '百度网盘是百度提供的云存储服务。', icon: '☁️' },
+                { name: '腾讯微云', url: 'https://www.weiyun.com', desc: '腾讯微云是腾讯提供的云存储服务。', icon: '☁️' },
+                { name: '115网盘', url: 'https://115.com', desc: '115网盘是云存储服务提供商。', icon: '☁️' },
+                { name: '360安全云盘', url: 'https://yunpan.360.cn', desc: '360安全云盘是360公司提供的云存储服务。', icon: '☁️' },
+                { name: '坚果云', url: 'https://www.jianguoyun.com', desc: '坚果云是云存储和文件同步服务提供商。', icon: '☁️' },
+                { name: '蓝奏云', url: 'https://www.lanzou.com', desc: '蓝奏云是文件存储和分享平台。', icon: '☁️' },
+                { name: '奶牛快传', url: 'https://cowtransfer.com', desc: '奶牛快传是文件临时传输服务平台。', icon: '📤' },
+                { name: '百度AI开放平台', url: 'https://ai.baidu.com', desc: '百度AI开放平台提供各种人工智能API服务。', icon: '🤖' },
+                { name: '腾讯AI开放平台', url: 'https://ai.qq.com', desc: '腾讯AI开放平台提供各种人工智能API服务。', icon: '🤖' },
+                { name: '阿里云AI', url: 'https://ai.aliyun.com', desc: '阿里云AI提供人工智能服务和解决方案。', icon: '🤖' },
+                { name: '讯飞开放平台', url: 'https://www.xfyun.cn', desc: '科大讯飞开放平台提供语音识别等AI服务。', icon: '🤖' },
+                { name: '商汤科技', url: 'https://www.sensetime.com', desc: '商汤科技是人工智能公司，提供计算机视觉等技术。', icon: '🤖' },
+                { name: '旷视科技', url: 'https://www.megvii.com', desc: '旷视科技是人工智能公司，提供计算机视觉技术。', icon: '🤖' },
+                { name: '云从科技', url: 'https://www.cloudwalk.cn', desc: '云从科技是人工智能公司，专注于计算机视觉和人机交互。', icon: '🤖' },
+                { name: '依图科技', url: 'https://www.yitutech.com', desc: '依图科技是人工智能公司，提供计算机视觉和深度学习技术。', icon: '🤖' },
+                { name: '小度', url: 'https://www.du.baidu.com', desc: '小度是百度旗下的人工智能助手。', icon: '🤖' },
+                { name: '天猫精灵', url: 'https://www.tmallgenie.com', desc: '天猫精灵是阿里巴巴旗下的智能音箱和AI助手。', icon: '🤖' },
+                { name: '小爱同学', url: 'https://www.mi.com/ai', desc: '小爱同学是小米旗下的人工智能助手。', icon: '🤖' },
+                { name: 'Siri', url: 'https://www.apple.com/siri', desc: 'Siri是苹果公司的语音助手。', icon: '🤖' },
+                { name: 'Google Assistant', url: 'https://assistant.google.com', desc: 'Google Assistant是谷歌的语音助手。', icon: '🤖' },
+                { name: 'Alexa', url: 'https://developer.amazon.com/alexa', desc: 'Alexa是亚马逊的语音助手。', icon: '🤖' },
+                { name: 'Bing AI', url: 'https://www.bing.com/chat', desc: 'Bing AI是微软推出的人工智能聊天助手。', icon: '🤖' },
+                { name: 'ChatGPT', url: 'https://chat.openai.com', desc: 'ChatGPT是OpenAI开发的对话生成模型。', icon: '🤖' },
+                { name: 'Claude', url: 'https://claude.ai', desc: 'Claude是Anthropic开发的对话AI助手。', icon: '🤖' },
+                { name: 'Gemini', url: 'https://gemini.google.com', desc: 'Gemini是谷歌开发的多模态AI模型。', icon: '🤖' },
+                { name: '文心一言', url: 'https://yiyan.baidu.com', desc: '文心一言是百度开发的对话生成模型。', icon: '🤖' },
+                { name: '豆包', url: 'https://www.doubao.com', desc: '豆包是字节跳动开发的AI对话助手。', icon: '🤖' },
+                { name: '讯飞星火', url: 'https://xinghuo.xfyun.cn', desc: '讯飞星火是科大讯飞开发的AI对话助手。', icon: '🤖' },
+                { name: '通义千问', url: 'https://tongyi.aliyun.com', desc: '通义千问是阿里巴巴开发的AI对话助手。', icon: '🤖' },
+                { name: '智谱清言', url: 'https://chatglm.cn', desc: '智谱清言是智谱AI开发的AI对话助手。', icon: '🤖' },
+                { name: '360智脑', url: 'https://ai.360.cn', desc: '360智脑是360公司开发的AI对话助手。', icon: '🤖' },
+                { name: '腾讯混元', url: 'https://hunyuan.tencent.com', desc: '腾讯混元是腾讯开发的AI大语言模型。', icon: '🤖' },
+                { name: '华为云盘古大模型', url: 'https://www.huaweicloud.com/product/pangu.html', desc: '华为云盘古大模型是华为开发的AI大语言模型。', icon: '🤖' },
+                { name: '京东言犀', url: 'https://yanxi.jd.com', desc: '京东言犀是京东开发的AI大语言模型。', icon: '🤖' },
+                { name: '小米小爱大模型', url: 'https://www.mi.com/ai', desc: '小米小爱大模型是小米开发的AI大语言模型。', icon: '🤖' },
+                { name: 'vivo蓝心大模型', url: 'https://www.vivo.com', desc: 'vivo蓝心大模型是vivo开发的AI大语言模型。', icon: '🤖' },
+                { name: 'OPPO AndesGPT', url: 'https://www.oppo.com', desc: 'OPPO AndesGPT是OPPO开发的AI大语言模型。', icon: '🤖' },
+                { name: '一加Ace', url: 'https://www.oneplus.com', desc: '一加Ace系列手机官方网站。', icon: '📱' },
+                { name: '苹果官网', url: 'https://www.apple.com', desc: '苹果公司官方网站。', icon: '🍎' },
+                { name: '华为官网', url: 'https://www.huawei.com', desc: '华为技术有限公司官方网站。', icon: '📱' },
+                { name: '小米官网', url: 'https://www.mi.com', desc: '小米公司官方网站。', icon: '📱' },
+                { name: 'OPPO官网', url: 'https://www.oppo.com', desc: 'OPPO公司官方网站。', icon: '📱' },
+                { name: 'vivo官网', url: 'https://www.vivo.com', desc: 'vivo公司官方网站。', icon: '📱' },
+                { name: '三星官网', url: 'https://www.samsung.com', desc: '三星电子官方网站。', icon: '📱' },
+                { name: '微软官网', url: 'https://www.microsoft.com', desc: '微软公司官方网站。', icon: '🖥️' },
+                { name: '英特尔官网', url: 'https://www.intel.com', desc: '英特尔公司官方网站。', icon: '💻' },
+                { name: 'AMD官网', url: 'https://www.amd.com', desc: 'AMD公司官方网站。', icon: '💻' },
+                { name: '英伟达官网', url: 'https://www.nvidia.com', desc: '英伟达公司官方网站。', icon: '💻' },
+                { name: '高通官网', url: 'https://www.qualcomm.com', desc: '高通公司官方网站。', icon: '📱' },
+                { name: '联发科官网', url: 'https://www.mediatek.com', desc: '联发科公司官方网站。', icon: '📱' },
+                { name: '台积电官网', url: 'https://www.tsmc.com', desc: '台积电公司官方网站。', icon: '💻' },
+                { name: '三星半导体', url: 'https://www.samsung.com/semiconductor', desc: '三星半导体官方网站。', icon: '💻' },
+                { name: 'SK海力士', url: 'https://www.skhynix.com', desc: 'SK海力士公司官方网站。', icon: '💻' },
+                { name: '美光科技', url: 'https://www.micron.com', desc: '美光科技公司官方网站。', icon: '💻' },
+                { name: '金士顿官网', url: 'https://www.kingston.com', desc: '金士顿公司官方网站。', icon: '💻' },
+                { name: '西部数据', url: 'https://www.westerndigital.com', desc: '西部数据公司官方网站。', icon: '💾' },
+                { name: '希捷官网', url: 'https://www.seagate.com', desc: '希捷公司官方网站。', icon: '💾' },
+                { name: '东芝存储', url: 'https://www.kioxia.com', desc: '铠侠（原东芝存储）公司官方网站。', icon: '💾' },
+                { name: '闪迪官网', url: 'https://www.sandisk.com', desc: '闪迪公司官方网站。', icon: '💾' },
+                { name: '华为云', url: 'https://www.huaweicloud.com', desc: '华为云是华为公司提供的云计算服务。', icon: '☁️' },
+                { name: '阿里云', url: 'https://www.aliyun.com', desc: '阿里云是阿里巴巴集团提供的云计算服务。', icon: '☁️' },
+                { name: '腾讯云', url: 'https://cloud.tencent.com', desc: '腾讯云是腾讯公司提供的云计算服务。', icon: '☁️' },
+                { name: '百度智能云', url: 'https://cloud.baidu.com', desc: '百度智能云是百度提供的云计算服务。', icon: '☁️' },
+                { name: 'AWS', url: 'https://aws.amazon.com', desc: '亚马逊AWS是亚马逊提供的云计算服务。', icon: '☁️' },
+                { name: 'Azure', url: 'https://azure.microsoft.com', desc: '微软Azure是微软提供的云计算服务。', icon: '☁️' },
+                { name: 'Google Cloud', url: 'https://cloud.google.com', desc: 'Google Cloud是谷歌提供的云计算服务。', icon: '☁️' },
+                { name: 'IBM Cloud', url: 'https://www.ibm.com/cloud', desc: 'IBM Cloud是IBM提供的云计算服务。', icon: '☁️' },
+                { name: 'Oracle Cloud', url: 'https://www.oracle.com/cloud', desc: 'Oracle Cloud是甲骨文公司提供的云计算服务。', icon: '☁️' },
+                { name: 'SAP Cloud', url: 'https://www.sap.com/products/cloud.html', desc: 'SAP Cloud是SAP提供的云计算服务。', icon: '☁️' },
+                { name: 'Salesforce', url: 'https://www.salesforce.com', desc: 'Salesforce是客户关系管理(CRM)软件服务提供商。', icon: '💼' },
+                { name: 'ZOHO', url: 'https://www.zoho.com', desc: 'ZOHO提供在线办公和商业软件服务。', icon: '💼' },
+                { name: 'Workday', url: 'https://www.workday.com', desc: 'Workday提供人力资源和财务管理软件服务。', icon: '💼' },
+                { name: 'ServiceNow', url: 'https://www.servicenow.com', desc: 'ServiceNow提供IT服务管理软件。', icon: '💼' },
+                { name: 'Atlassian', url: 'https://www.atlassian.com', desc: 'Atlassian提供团队协作和开发工具，如Jira、Confluence等。', icon: '💼' },
+                { name: 'Slack', url: 'https://slack.com', desc: 'Slack是团队沟通和协作平台。', icon: '💬' },
+                { name: 'Microsoft Teams', url: 'https://www.microsoft.com/microsoft-teams', desc: 'Microsoft Teams是微软的团队协作平台。', icon: '💬' },
+                { name: 'Zoom', url: 'https://zoom.us', desc: 'Zoom提供视频会议和在线会议服务。', icon: '💻' },
+                { name: 'Webex', url: 'https://www.webex.com', desc: 'Webex是思科提供的视频会议和协作平台。', icon: '💻' },
+                { name: 'GoToMeeting', url: 'https://www.gotomeeting.com', desc: 'GoToMeeting提供在线会议服务。', icon: '💻' },
+                { name: 'BlueJeans', url: 'https://www.bluejeans.com', desc: 'BlueJeans提供视频会议服务。', icon: '💻' },
+                { name: 'Google Meet', url: 'https://meet.google.com', desc: 'Google Meet是谷歌提供的视频会议服务。', icon: '💻' },
+                { name: 'FaceTime', url: 'https://www.apple.com/facetime', desc: 'FaceTime是苹果公司的视频通话服务。', icon: '📱' },
+                { name: '微信', url: 'https://weixin.qq.com', desc: '微信是中国流行的即时通讯应用。', icon: '📱' },
+                { name: 'QQ', url: 'https://im.qq.com', desc: 'QQ是腾讯公司的即时通讯软件。', icon: '💬' },
+                { name: '钉钉', url: 'https://www.dingtalk.com', desc: '钉钉是阿里巴巴推出的企业级通讯与协同平台。', icon: '💼' },
+                { name: '飞书', url: 'https://www.feishu.cn', desc: '飞书是字节跳动推出的企业协作平台。', icon: '💼' },
+                { name: '企业微信', url: 'https://work.weixin.qq.com', desc: '企业微信是微信团队开发的企业通讯与管理工具。', icon: '💼' },
+                { name: 'Skype', url: 'https://www.skype.com', desc: 'Skype是微软的即时通讯和视频通话软件。', icon: '💬' },
+                { name: 'WhatsApp', url: 'https://www.whatsapp.com', desc: 'WhatsApp是全球流行的即时通讯应用。', icon: '📱' },
+                { name: 'Telegram', url: 'https://telegram.org', desc: 'Telegram是跨平台的即时通讯软件。', icon: '💬' },
+                { name: 'Signal', url: 'https://signal.org', desc: 'Signal是注重隐私的即时通讯应用。', icon: '💬' },
+                { name: 'Line', url: 'https://line.me', desc: 'Line是日本流行的即时通讯应用。', icon: '💬' },
+                { name: 'KakaoTalk', url: 'https://www.kakaocorp.com/service/KakaoTalk', desc: 'KakaoTalk是韩国流行的即时通讯应用。', icon: '💬' },
+                { name: 'Viber', url: 'https://www.viber.com', desc: 'Viber是全球流行的即时通讯应用。', icon: '💬' },
+                { name: 'Discord', url: 'https://discord.com', desc: 'Discord是游戏玩家常用的通讯平台。', icon: '🎮' },
+                { name: '微博', url: 'https://weibo.com', desc: '微博是中国流行的社交媒体平台。', icon: '🔔' },
+                { name: 'Twitter', url: 'https://twitter.com', desc: 'Twitter是全球流行的社交媒体平台。', icon: '🐦' },
+                { name: 'Facebook', url: 'https://www.facebook.com', desc: 'Facebook是全球最大的社交媒体平台。', icon: '📱' },
+                { name: 'Instagram', url: 'https://www.instagram.com', desc: 'Instagram是照片和视频分享平台。', icon: '📷' },
+                { name: 'LinkedIn', url: 'https://www.linkedin.com', desc: 'LinkedIn是职业社交网络平台。', icon: '💼' },
+                { name: 'Pinterest', url: 'https://www.pinterest.com', desc: 'Pinterest是图片分享和社交平台。', icon: '📌' },
+                { name: 'Snapchat', url: 'https://www.snapchat.com', desc: 'Snapchat是短视频和图片分享应用。', icon: '📸' },
+                { name: 'TikTok', url: 'https://www.tiktok.com', desc: 'TikTok是全球流行的短视频分享平台。', icon: '🎵' },
+                { name: 'YouTube', url: 'https://www.youtube.com', desc: 'YouTube是全球最大的视频分享平台。', icon: '🎬' },
+                { name: 'Netflix', url: 'https://www.netflix.com', desc: 'Netflix是全球知名的流媒体平台。', icon: '🎬' },
+                { name: 'Hulu', url: 'https://www.hulu.com', desc: 'Hulu是美国的流媒体平台。', icon: '🎬' },
+                { name: 'Disney+', url: 'https://www.disneyplus.com', desc: 'Disney+是迪士尼的流媒体平台。', icon: '🎬' },
+                { name: 'Amazon Prime Video', url: 'https://www.primevideo.com', desc: 'Amazon Prime Video是亚马逊的流媒体平台。', icon: '🎬' },
+                { name: 'HBO Max', url: 'https://www.hbomax.com', desc: 'HBO Max是HBO的流媒体平台。', icon: '🎬' },
+                { name: 'Peacock', url: 'https://www.peacocktv.com', desc: 'Peacock是NBC环球的流媒体平台。', icon: '🎬' },
+                { name: 'Paramount+', url: 'https://www.paramountplus.com', desc: 'Paramount+是派拉蒙的流媒体平台。', icon: '🎬' },
+                { name: 'Apple TV+', url: 'https://tv.apple.com', desc: 'Apple TV+是苹果公司的流媒体平台。', icon: '🎬' },
+                { name: 'Spotify', url: 'https://www.spotify.com', desc: 'Spotify是全球流行的音乐流媒体平台。', icon: '🎵' },
+                { name: 'Apple Music', url: 'https://music.apple.com', desc: 'Apple Music是苹果公司的音乐流媒体服务。', icon: '🎵' },
+                { name: 'Amazon Music', url: 'https://music.amazon.com', desc: 'Amazon Music是亚马逊的音乐流媒体服务。', icon: '🎵' },
+                { name: 'YouTube Music', url: 'https://music.youtube.com', desc: 'YouTube Music是YouTube的音乐流媒体服务。', icon: '🎵' },
+                { name: 'Tidal', url: 'https://tidal.com', desc: 'Tidal是高保真音乐流媒体服务。', icon: '🎵' },
+                { name: 'Deezer', url: 'https://www.deezer.com', desc: 'Deezer是音乐流媒体服务。', icon: '🎵' },
+                { name: 'QQ音乐', url: 'https://y.qq.com', desc: 'QQ音乐是中国流行的音乐流媒体平台。', icon: '🎵' },
+                { name: '网易云音乐', url: 'https://music.163.com', desc: '网易云音乐是中国流行的音乐流媒体平台。', icon: '🎵' },
+                { name: '酷狗音乐', url: 'https://www.kugou.com', desc: '酷狗音乐是中国流行的音乐平台。', icon: '🎵' },
+                { name: '酷我音乐', url: 'https://www.kuwo.cn', desc: '酷我音乐是中国流行的音乐平台。', icon: '🎵' },
+                { name: '咪咕音乐', url: 'https://music.migu.cn', desc: '咪咕音乐是中国移动旗下的音乐平台。', icon: '🎵' }
+            ];
+
+            // 添加到DOM
+            addWebsitesToDOM(videoSites, 'videoSites');
+            addWebsitesToDOM(searchEngines, 'searchEngines');
+            addWebsitesToDOM(devSites, 'devSites');
+            addWebsitesToDOM(utilitySites, 'utilitySites');
+        }
+
+        // 系统工具数据
+        const systemTools = [
+            {
+                name: '图吧工具箱',
+                description: '强大的硬件检测工具合集，包含多种实用工具',
+                icon: '🔧',
+                downloadLink: 'http://www.tbtool.cn/'
+            },
+            {
+                name: 'U盘魔术师',
+                description: '专业的U盘启动盘制作工具',
+                icon: '💾',
+                downloadLink: 'https://www.upan.cc/'
+            },
+            {
+                name: '驱动精灵',
+                description: '全面的驱动管理和维护工具',
+                icon: '⚙️',
+                downloadLink: 'https://www.drivergenius.com/'
+            },
+            {
+                name: '鲁大师',
+                description: '系统优化和硬件检测工具',
+                icon: '🖥️',
+                downloadLink: 'https://www.ludashi.com/'
+            },
+            {
+                name: 'WinRAR',
+                description: '流行的压缩文件管理工具',
+                icon: '📦',
+                downloadLink: 'https://www.win-rar.com/download.html?&L=0'
+            },
+            {
+                name: '7-Zip',
+                description: '开源的压缩文件管理工具',
+                icon: '🗜️',
+                downloadLink: 'https://www.7-zip.org/download.html'
+            },
+            {
+                name: 'CCleaner',
+                description: '系统清理和优化工具',
+                icon: '🧹',
+                downloadLink: 'https://www.ccleaner.com/ccleaner/download'
+            },
+            {
+                name: '火绒安全',
+                description: '轻量级的安全防护软件',
+                icon: '🛡️',
+                downloadLink: 'https://www.huorong.cn/'
+            },
+            {
+                name: 'Dism++',
+                description: 'Windows实用工具箱',
+                icon: '🛠️',
+                downloadLink: 'https://www.chuyu.me/zh-Hans/'
+            },
+            {
+                name: '傲梅分区助手',
+                description: '磁盘分区管理工具',
+                icon: 'パーテーション',
+                downloadLink: 'https://www.disktool.cn/download.html'
+            }
+        ];
+
+        // 编码工具数据
+        const codingTools = [
+            {
+                name: 'Python',
+                description: '强大的编程语言，广泛用于数据分析、人工智能等领域',
+                icon: '🐍',
+                downloadLink: 'https://www.python.org/downloads/'
+            },
+            {
+                name: 'Visual Studio Code',
+                description: '轻量级但功能强大的源代码编辑器',
+                icon: '⌨️',
+                downloadLink: 'https://code.visualstudio.com/Download'
+            },
+            {
+                name: 'Sublime Text',
+                description: '轻量、可扩展、跨平台的文本编辑器',
+                icon: '📝',
+                downloadLink: 'https://www.sublimetext.com/download'
+            },
+            {
+                name: 'PyCharm',
+                description: '专业的Python集成开发环境',
+                icon: '💻',
+                downloadLink: 'https://www.jetbrains.com/pycharm/download/'
+            },
+            {
+                name: 'IntelliJ IDEA',
+                description: '强大的Java集成开发环境',
+                icon: '☕',
+                downloadLink: 'https://www.jetbrains.com/idea/download/'
+            },
+            {
+                name: 'Eclipse',
+                description: '开源的集成开发环境，主要用于Java开发',
+                icon: '🌟',
+                downloadLink: 'https://www.eclipse.org/downloads/'
+            },
+            {
+                name: 'Git',
+                description: '分布式版本控制系统',
+                icon: '🔄',
+                downloadLink: 'https://git-scm.com/downloads'
+            },
+            {
+                name: 'Node.js',
+                description: '基于Chrome V8引擎的JavaScript运行环境',
+                icon: '🌐',
+                downloadLink: 'https://nodejs.org/en/download/'
+            },
+            {
+                name: 'Java JDK',
+                description: 'Java开发工具包',
+                icon: '☕',
+                downloadLink: 'https://www.oracle.com/java/technologies/downloads/'
+            },
+            {
+                name: 'xhEditor',
+                description: '基于jQuery的可视化HTML编辑器',
+                icon: '📝',
+                downloadLink: 'http://xheditor.com/download'
+            }
+        ];
+
+        // 镜像大全数据
+        const imageTools = [
+            {
+                name: 'Windows 7',
+                description: '经典的操作系统版本',
+                icon: '7️⃣',
+                downloadLink: 'https://www.microsoft.com/software-download/windows7'
+            },
+            {
+                name: 'Windows 8.1',
+                description: '微软操作系统版本',
+                icon: '8️⃣',
+                downloadLink: 'https://www.microsoft.com/software-download/windows8ISO'
+            },
+            {
+                name: 'Windows 10',
+                description: '广泛使用的操作系统版本',
+                icon: '🔟',
+                downloadLink: 'https://www.microsoft.com/software-download/windows10'
+            },
+            {
+                name: 'Windows 11',
+                description: '最新的Windows操作系统',
+                icon: '1️⃣',
+                downloadLink: 'https://www.microsoft.com/software-download/windows11'
+            },
+            {
+                name: 'Ubuntu',
+                description: '流行的Linux发行版',
+                icon: '🐧',
+                downloadLink: 'https://ubuntu.com/download/desktop'
+            }
+        ];
+
+        // 其他工具数据
+        const otherTools = [
+            {
+                name: '微信',
+                description: '腾讯推出的即时通讯软件',
+                icon: '💬',
+                downloadLink: 'https://pc.weixin.qq.com/'
+            },
+            {
+                name: 'QQ',
+                description: '腾讯推出的即时通讯软件',
+                icon: '🐧',
+                downloadLink: 'https://im.qq.com/pcqq/'
+            },
+            {
+                name: '钉钉',
+                description: '阿里巴巴集团的办公通讯平台',
+                icon: '🔨',
+                downloadLink: 'https://www.dingtalk.com/win'
+            },
+            {
+                name: '腾讯会议',
+                description: '腾讯推出的云视频会议工具',
+                icon: '🎥',
+                downloadLink: 'https://meeting.tencent.com/download-center.html'
+            },
+            {
+                name: 'Zoom',
+                description: '视频会议和网络研讨会平台',
+                icon: '📹',
+                downloadLink: 'https://zoom.us/download'
+            },
+            {
+                name: 'TeamViewer',
+                description: '远程控制和在线会议软件',
+                icon: '🖥️',
+                downloadLink: 'https://www.teamviewer.cn/cn/download/'
+            },
+            {
+                name: '向日葵',
+                description: '远程控制软件',
+                icon: '🌻',
+                downloadLink: 'https://sunlogin.oray.com/download/'
+            },
+            {
+                name: '百度网盘',
+                description: '云存储服务',
+                icon: '☁️',
+                downloadLink: 'https://pan.baidu.com/download'
+            },
+            {
+                name: '阿里云盘',
+                description: '阿里云推出的云存储服务',
+                icon: '💾',
+                downloadLink: 'https://www.aliyundrive.com/download'
+            },
+            {
+                name: '迅雷',
+                description: '下载工具',
+                icon: '⚡',
+                downloadLink: 'https://xl.xunlei.com/'
+            }
+        ];
+
+        // 添加工具到DOM
+        function addToolsToDOM(tools, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // 清空容器
+            container.innerHTML = '';
+
+            tools.forEach(tool => {
+                const toolItem = document.createElement('div');
+                toolItem.className = 'website-item';
+                toolItem.innerHTML = `
+                    <div class="website-icon">${tool.icon}</div>
+                    <div class="website-info">
+                        <div class="website-name">${tool.name}</div>
+                        <div class="website-desc">${tool.description}</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('${tool.downloadLink}', '_blank')">下载</button>
+                `;
+                container.appendChild(toolItem);
+            });
+        }
+
+        // 在generateMoreWebsites函数末尾添加以下代码
+        // 添加工具数据到对应的模态框
+        document.addEventListener('DOMContentLoaded', function() {
+            addToolsToDOM(systemTools, 'systemTools');
+            addToolsToDOM(codingTools, 'codingTools');
+            addToolsToDOM(imageTools, 'imageTools');
+            addToolsToDOM(otherTools, 'otherTools');
+        });
+
+        // 将网址添加到DOM
+        function addWebsitesToDOM(websites, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            websites.forEach(website => {
+                const li = document.createElement('li');
+                li.className = 'website-item';
+                li.dataset.url = website.url;
+                li.dataset.desc = website.desc;
+                li.innerHTML = `
+                    <div class="website-icon">${website.icon}</div>
+                    <div class="website-info">
+                        <div class="website-name">${website.name}</div>
+                        <div class="website-desc">${website.desc}</div>
+                    </div>
+                    <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('${website.url}', '_blank')">前往</button>
+                `;
+
+                container.appendChild(li);
+            });
+        }
+
+        // 创建单个波纹
+        function createSingleRipple() {
+            const body = document.body;
+            const ripple = document.createElement('div');
+            ripple.classList.add('ripple');
+
+            // 随机位置
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+
+            // 随机大小
+            const size = Math.random() * 300 + 100;
+
+            // 随机延迟和持续时间
+            const delay = Math.random() * 2;
+            const duration = Math.random() * 15 + 10;
+
+            // 设置样式
+            ripple.style.left = `${x}%`;
+            ripple.style.top = `${y}%`;
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            ripple.style.animationDelay = `${delay}s`;
+            ripple.style.animationDuration = `${duration}s`;
+            ripple.style.zIndex = '0'; // 确保波纹在背景之上但在内容之下
+
+            body.appendChild(ripple);
+
+            // 动画结束后移除元素并创建新的
+            setTimeout(() => {
+                ripple.remove();
+                createSingleRipple();
+            }, (delay + duration) * 1000);
+        }
+    </script>
+</body>
+</html>
