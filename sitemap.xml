@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 网站首页 -->
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 内部工具分类锚点 -->
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#officeTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#systemTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#codingTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#imageTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>quarterly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#websiteTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://admin7730.github.io/ZaiXi-Tool.github.io/#otherTool</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 办公工具全部链接 -->
+    <url><loc>https://southfront.mm.fcix.net/tdf/libreoffice/stable/25.2.5/win/x86_64/LibreOffice_25.2.5_Win_x86-64.msi</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.sumatrapdfreader.org/download-free-pdf-viewer.html</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.tracker-software.com/product/pdf-xchange-editor</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://official-package.wpscdn.cn/wps/download/WPS_Setup_21915.exe</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://mirrors.sdu.edu.cn/github-release/YerongAI_Office-Tool/v10.24.68.0/Office_Tool_with_runtime_v10.24.68.0_x64.zip</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://xmind.cn/download/</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sourceforge.net/projects/dia-installer/</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.dida365.com/download</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://shimo.im/download</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.processon.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.yinxiang.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://docs.qq.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+    <!-- 系统工具全部链接 -->
+    <url><loc>http://www.tbtool.cn/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.upan.cc/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.drivergenius.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.ludashi.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.win-rar.com/download.html?&L=0</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.7-zip.org/download.html</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.ccleaner.com/ccleaner/download</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.huorong.cn/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.chuyu.me/zh-Hans/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.disktool.cn/download.html</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+
+    <!-- 编码工具全部链接 -->
+    <url><loc>https://www.python.org/downloads/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://code.visualstudio.com/Download</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.sublimetext.com/download</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.jetbrains.com/pycharm/download/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.jetbrains.com/idea/download/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.eclipse.org/downloads/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://git-scm.com/downloads</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://nodejs.org/en/download/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.oracle.com/java/technologies/downloads/</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.7</priority></url>
+    <url><loc>http://xheditor.com/download</loc><lastmod>2025-08-06</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
+    <!-- 镜像大全全部链接 -->
+    <url><loc>https://www.microsoft.com/software-download/windows7</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.microsoft.com/software-download/windows8ISO</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.microsoft.com/software-download/windows10</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.microsoft.com/software-download/windows11</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://ubuntu.com/download/desktop</loc><lastmod>2025-08-06</lastmod><changefreq>quarterly</changefreq><priority>0.6</priority></url>
+
+    <!-- 网址大全全部核心链接 -->
+    <url><loc>https://www.baidu.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.google.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.sogou.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.bilibili.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.youtube.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://v.qq.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://github.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://stackoverflow.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://developer.mozilla.org</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.baidu.com/s?wd=%E5%A4%A9%E6%B0%94</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://translate.google.com</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+    <url><loc>https://www.12306.cn</loc><lastmod>2025-08-06</lastmod><changefreq>daily</changefreq><priority>0.6</priority></url>
+
+    <!-- 其他工具全部链接 -->
+    <url><loc>https://pc.weixin.qq.com/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://im.qq.com/pcqq/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.dingtalk.com/win</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://meeting.tencent.com/download-center.html</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://zoom.us/download</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.teamviewer.cn/cn/download/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sunlogin.oray.com/download/</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://pan.baidu.com/download</loc><lastmod>2025-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://www.aliyundrive.com/download</loc><lastmod>2025-08-06</lastmod><changefreq>monthly
