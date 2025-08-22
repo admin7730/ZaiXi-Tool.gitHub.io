@@ -455,100 +455,81 @@
         }
 
         .captcha-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 1.5rem;
         }
 
-        .puzzle-container {
-            width: 100%;
-            height: 200px;
+        /* 验证方框样式 */
+        .verification-checkbox {
+            width: 200px;
+            height: 120px;
             background: #2a2a2a;
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .puzzle-background {
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c4zIgEAAAFvklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx6iyQQ1q2mvX86U5p+q+0CdXnLBx+4d5V0v95fWdMOzETqA36B5/l8G8tJW2EEFRWgPk5H2ClJfC9yHGzTVNRaP3mXN9jw1YxLgE9q34nntH/9BY0smnseX9/wA0KJR4dyxUQQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0wOC0wOVQwNToxNjo0MyswMjowMAOroKQAAAAASUVORK5CYII=');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .puzzle-piece {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid #fff;
-            border-radius: 4px;
-            position: absolute;
-            top: 70px;
-            left: 20px;
-            cursor: move;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c4zIgEAAAFvklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx6iyQQ1q2mvX86U5p+q+0CdXnLBx+4d5V0v95fWdMOzETqA36B5/l8G8tJW2EEFRWgPk5H2ClJfC9yHGzTVNRaP3mXN9jw1YxLgE9q34nntH/9BY0smnseX9/wA0KJR4dyxUQQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0wOC0wOVQwNToxNjo0MyswMjowMAOroKQAAAAASUVORK5CYII=');
-            background-size: 400px 200px;
-            background-position: 20px 70px;
-        }
-
-        .slider-container {
-            width: 100%;
-        }
-
-        .slider-track {
-            width: 100%;
-            height: 40px;
-            background: #333;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #ff3300, #ff9900);
-            border-radius: 50%;
+            border: 2px dashed #555;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 1.2rem;
-            cursor: grab;
-            box-shadow: 0 0 10px rgba(255, 51, 0, 0.5);
-            transition: all 0.1s ease;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
         }
 
-        .slider-handle:active {
-            cursor: grabbing;
+        .verification-checkbox:hover {
+            border-color: #e94560;
+            background: #333;
         }
 
+        .verification-checkbox.clicked {
+            border-color: #4CAF50;
+            background: #2d3d2d;
+        }
+
+        .checkbox-text {
+            color: #aaa;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.4;
+            padding: 10px;
+        }
+
+        /* 进度环样式 */
+        .progress-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .progress-ring.visible {
+            display: block;
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke: #4CAF50;
+            stroke-linecap: round;
+        }
+
+        /* 验证状态和倒计时 */
         .verification-status {
             color: #aaa;
             text-align: center;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        .refresh-captcha {
-            display: block;
-            width: 100%;
-            padding: 0.8rem;
-            background: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+            margin-top: 1rem;
             font-size: 0.9rem;
         }
 
-        .refresh-captcha:hover {
-            background: #444;
+        .verification-success {
+            color: #4CAF50;
+        }
+
+        .verification-error {
+            color: #f44336;
         }
 
         .verified {
@@ -592,22 +573,40 @@
     <div id="humanVerificationModal" class="human-verification-modal">
         <div class="verification-container">
             <h2 class="verification-title">人机验证</h2>
-            <p class="verification-desc">请完成验证以访问载熙工具箱</p>
+            <p class="verification-desc">请完成以下操作以继续访问</p>
             <div class="captcha-container">
-                <div id="puzzleContainer" class="puzzle-container">
-                    <div id="puzzleBackground" class="puzzle-background"></div>
-                    <div id="puzzlePiece" class="puzzle-piece"></div>
-                </div>
-                <div id="sliderContainer" class="slider-container">
-                    <div id="sliderTrack" class="slider-track">
-                        <div id="sliderHandle" class="slider-handle">
-                            <span>→</span>
-                        </div>
+                <div id="verificationCheckbox" class="verification-checkbox">
+                    <div class="checkbox-text">
+                        点击此框<br>
+                        进入我们的网站
                     </div>
-                    <p id="verificationStatus" class="verification-status">向右拖动滑块完成拼图</p>
+                    <div id="progressRing" class="progress-ring">
+                        <svg width="80" height="80" viewBox="0 0 80 80">
+                            <circle
+                                cx="40"
+                                cy="40"
+                                r="36"
+                                fill="none"
+                                stroke="#333"
+                                stroke-width="4"
+                            />
+                            <circle
+                                id="progressCircle"
+                                class="progress-ring-circle"
+                                cx="40"
+                                cy="40"
+                                r="36"
+                                fill="none"
+                                stroke="#4CAF50"
+                                stroke-width="4"
+                                stroke-dasharray="226.195"
+                                stroke-dashoffset="226.195"
+                            />
+                        </svg>
+                    </div>
                 </div>
+                <p id="verificationStatus" class="verification-status">点击上方方框开始验证</p>
             </div>
-            <button id="refreshCaptcha" class="refresh-captcha" type="button">换一张</button>
         </div>
     </div>
 
@@ -658,7 +657,7 @@
             <h3 class="category-title">常用转换工具</h3>
             <ul class="website-list" id="converterTools">
                 <li class="website-item" data-url="https://southfront.mm.fcix.net/tdf/libreoffice/stable/25.2.5/win/x86_64/LibreOffice_25.2.5_Win_x86-64.msi" data-desc="LibreOffice是一款开源的办公软件套件，包含Writer、Calc、Impress等组件，支持多种文件格式转换。">
-                    <div class="website-icon"><img src="https://www.libreoffice.org/favicon.ico" alt="LibreOffice图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.libreoffice.org';"></div>
+                    <div class="website-icon"><img src="https://www.libreoffice.org/favicon.ico" alt="LibreOffice图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">LibreOffice</div>
                         <div class="website-desc">LibreOffice是一款开源的办公软件套件，包含Writer、Calc、Impress等组件，支持多种文件格式转换。</div>
@@ -666,7 +665,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://southfront.mm.fcix.net/tdf/libreoffice/stable/25.2.5/win/x86_64/LibreOffice_25.2.5_Win_x86-64.msi', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://www.sumatrapdfreader.org/download-free-pdf-viewer.html" data-desc="Sumatra PDF是一款开源的轻量级PDF阅读器，体积小巧，启动速度快，支持多种文档格式。">
-                    <div class="website-icon"><img src="https://www.sumatrapdfreader.org/favicon.ico" alt="Sumatra PDF图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.sumatrapdfreader.org';"></div>
+                    <div class="website-icon"><img src="https://www.sumatrapdfreader.org/favicon.ico" alt="Sumatra PDF图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">Sumatra PDF</div>
                         <div class="website-desc">Sumatra PDF是一款开源的轻量级PDF阅读器，体积小巧，启动速度快，支持多种文档格式。</div>
@@ -674,7 +673,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.sumatrapdfreader.org/download-free-pdf-viewer.html', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://www.tracker-software.com/product/pdf-xchange-editor" data-desc="PDF-XChange Editor是一款功能强大的PDF编辑器，支持注释、编辑、OCR识别等多种功能。">
-                    <div class="website-icon"><img src="https://www.tracker-software.com/favicon.ico" alt="PDF-XChange Editor图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.tracker-software.com';"></div>
+                    <div class="website-icon"><img src="https://www.tracker-software.com/favicon.ico" alt="PDF-XChange Editor图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">PDF-XChange Editor</div>
                         <div class="website-desc">PDF-XChange Editor是一款功能强大的PDF编辑器，支持注释、编辑、OCR识别等多种功能。</div>
@@ -682,7 +681,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.tracker-software.com/product/pdf-xchange-editor', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://official-package.wpscdn.cn/wps/download/WPS_Setup_21915.exe" data-desc="WPS是一款功能强大的办公软件套件，包含文字、表格、演示等组件，兼容多种文件格式。">
-                    <div class="website-icon"><img src="https://www.wps.com/favicon.ico" alt="WPS图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.wps.com';"></div>
+                    <div class="website-icon"><img src="https://www.wps.com/favicon.ico" alt="WPS图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">WPS</div>
                         <div class="website-desc">WPS是一款功能强大的办公软件套件，包含文字、表格、演示等组件，兼容多种文件格式。</div>
@@ -690,7 +689,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://official-package.wpscdn.cn/wps/download/WPS_Setup_21915.exe', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://mirrors.sdu.edu.cn/github-release/YerongAI_Office-Tool/v10.24.68.0/Office_Tool_with_runtime_v10.24.68.0_x64.zip" data-desc="YerongAI Office Tool是一款实用的办公工具，提供Office相关的功能和工具。">
-                    <div class="website-icon"><img src="https://github.com/YerongAI/Office-Tool/favicon.ico" alt="YerongAI Office Tool图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://github.com/YerongAI/Office-Tool';"></div>
+                    <div class="website-icon"><img src="https://github.com/YerongAI/Office-Tool/favicon.ico" alt="YerongAI Office Tool图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">YerongAI Office Tool</div>
                         <div class="website-desc">YerongAI Office Tool是一款实用的办公工具，提供Office相关的功能和工具。</div>
@@ -698,7 +697,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://mirrors.sdu.edu.cn/github-release/YerongAI_Office-Tool/v10.24.68.0/Office_Tool_with_runtime_v10.24.68.0_x64.zip', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://xmind.cn/download/" data-desc="XMind是一款功能强大的思维导图软件，支持多种思维导图结构、多格式导出、头脑风暴等功能，适用于学习和工作场景。">
-                    <div class="website-icon"><img src="https://www.xmind.cn/favicon.ico" alt="XMind图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://xmind.cn';"></div>
+                    <div class="website-icon"><img src="https://www.xmind.cn/favicon.ico" alt="XMind图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">XMind</div>
                         <div class="website-desc">XMind是一款功能强大的思维导图软件，支持多种思维导图结构、多格式导出、头脑风暴等功能，适用于学习和工作场景。</div>
@@ -706,7 +705,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://xmind.cn/download/', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://sourceforge.net/projects/dia-installer/" data-desc="Dia Diagram Editor是一款开源的流程图绘制软件，支持多种图表类型、多格式导出，适用于架构图、流程图等文档绘制。">
-                    <div class="website-icon"><img src="https://sourceforge.net/favicon.ico" alt="Dia Diagram Editor图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://sourceforge.net';"></div>
+                    <div class="website-icon"><img src="https://sourceforge.net/favicon.ico" alt="Dia Diagram Editor图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">Dia Diagram Editor</div>
                         <div class="website-desc">Dia Diagram Editor是一款开源的流程图绘制软件，支持多种图表类型、多格式导出，适用于架构图、流程图等文档绘制。</div>
@@ -714,7 +713,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://sourceforge.net/projects/dia-installer/', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://www.dida365.com/download" data-desc="滴答清单是一款高效的任务管理与日程规划工具，支持多平台同步、智能识别、全能提醒、日历视图和团队协作等功能。">
-                    <div class="website-icon"><img src="https://www.dida365.com/favicon.ico" alt="滴答清单图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.dida365.com';"></div>
+                    <div class="website-icon"><img src="https://www.dida365.com/favicon.ico" alt="滴答清单图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">滴答清单</div>
                         <div class="website-desc">滴答清单是一款高效的任务管理与日程规划工具，支持多平台同步、智能识别、全能提醒、日历视图和团队协作等功能。</div>
@@ -766,7 +765,7 @@
             <h3 class="category-title">搜索引擎</h3>
             <ul class="website-list" id="searchEngines">
                 <li class="website-item" data-url="https://www.baidu.com" data-desc="百度是中国最大的搜索引擎，提供网页、图片、视频等多种搜索服务。">
-                    <div class="website-icon"><img src="https://www.baidu.com/favicon.ico" alt="百度图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.baidu.com';"></div>
+                    <div class="website-icon"><img src="https://www.baidu.com/favicon.ico" alt="百度图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">百度</div>
                         <div class="website-desc">百度是中国最大的搜索引擎，提供网页、图片、视频等多种搜索服务。</div>
@@ -774,7 +773,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.baidu.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://www.google.com" data-desc="谷歌是全球最大的搜索引擎，提供广泛的搜索服务和相关产品。">
-                    <div class="website-icon"><img src="https://www.google.com/favicon.ico" alt="谷歌图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.google.com';"></div>
+                    <div class="website-icon"><img src="https://www.google.com/favicon.ico" alt="谷歌图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">谷歌</div>
                         <div class="website-desc">谷歌是全球最大的搜索引擎，提供广泛的搜索服务和相关产品。</div>
@@ -782,7 +781,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.google.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://www.sogou.com" data-desc="搜狗是中国的搜索引擎之一，以其输入法和搜索服务而知名。">
-                    <div class="website-icon"><img src="https://www.sogou.com/favicon.ico" alt="搜狗图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.sogou.com';"></div>
+                    <div class="website-icon"><img src="https://www.sogou.com/favicon.ico" alt="搜狗图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">搜狗</div>
                         <div class="website-desc">搜狗是中国的搜索引擎之一，以其输入法和搜索服务而知名。</div>
@@ -794,7 +793,7 @@
             <h3 class="category-title">视频网站</h3>
             <ul class="website-list" id="videoSites">
                 <li class="website-item" data-url="https://www.bilibili.com" data-desc="哔哩哔哩是中国年轻人喜爱的视频分享网站，以动画、游戏、音乐等内容为主。">
-                    <div class="website-icon"><img src="https://www.bilibili.com/favicon.ico" alt="哔哩哔哩图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.bilibili.com';"></div>
+                    <div class="website-icon"><img src="https://www.bilibili.com/favicon.ico" alt="哔哩哔哩图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">哔哩哔哩</div>
                         <div class="website-desc">哔哩哔哩是中国年轻人喜爱的视频分享网站，以动画、游戏、音乐等内容为主。</div>
@@ -802,7 +801,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.bilibili.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://www.youtube.com" data-desc="YouTube是全球最大的视频分享平台，拥有海量的视频内容。">
-                    <div class="website-icon"><img src="https://www.youtube.com/favicon.ico" alt="YouTube图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.youtube.com';"></div>
+                    <div class="website-icon"><img src="https://www.youtube.com/favicon.ico" alt="YouTube图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">YouTube</div>
                         <div class="website-desc">YouTube是全球最大的视频分享平台，拥有海量的视频内容。</div>
@@ -810,7 +809,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.youtube.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://v.qq.com" data-desc="腾讯视频是中国领先的在线视频媒体平台，提供丰富的影视内容。">
-                    <div class="website-icon"><img src="https://v.qq.com/favicon.ico" alt="腾讯视频图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://v.qq.com';"></div>
+                    <div class="website-icon"><img src="https://v.qq.com/favicon.ico" alt="腾讯视频图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">腾讯视频</div>
                         <div class="website-desc">腾讯视频是中国领先的在线视频媒体平台，提供丰富的影视内容。</div>
@@ -822,7 +821,7 @@
             <h3 class="category-title">代码与开发</h3>
             <ul class="website-list" id="devSites">
                 <li class="website-item" data-url="https://github.com" data-desc="GitHub是全球最大的代码托管平台和开发者社区。">
-                    <div class="website-icon"><img src="https://github.com/favicon.ico" alt="GitHub图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://github.com';"></div>
+                    <div class="website-icon"><img src="https://github.com/favicon.ico" alt="GitHub图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">GitHub</div>
                         <div class="website-desc">GitHub是全球最大的代码托管平台和开发者社区。</div>
@@ -830,7 +829,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://github.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://stackoverflow.com" data-desc="Stack Overflow是程序员常用的问答社区，解决各种编程问题。">
-                    <div class="website-icon"><img src="https://stackoverflow.com/favicon.ico" alt="Stack Overflow图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://stackoverflow.com';"></div>
+                    <div class="website-icon"><img src="https://stackoverflow.com/favicon.ico" alt="Stack Overflow图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">Stack Overflow</div>
                         <div class="website-desc">Stack Overflow是程序员常用的问答社区，解决各种编程问题。</div>
@@ -838,7 +837,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://stackoverflow.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://developer.mozilla.org" data-desc="MDN Web Docs提供权威的Web技术文档和教程。">
-                    <div class="website-icon"><img src="https://developer.mozilla.org/favicon.ico" alt="MDN Web Docs图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://developer.mozilla.org';"></div>
+                    <div class="website-icon"><img src="https://developer.mozilla.org/favicon.ico" alt="MDN Web Docs图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">MDN Web Docs</div>
                         <div class="website-desc">MDN Web Docs提供权威的Web技术文档和教程。</div>
@@ -850,7 +849,7 @@
             <h3 class="category-title">实用工具</h3>
             <ul class="website-list" id="utilitySites">
                 <li class="website-item" data-url="https://www.baidu.com/s?wd=%E5%A4%A9%E6%B0%94" data-desc="百度天气提供全国各地的天气查询服务。">
-                    <div class="website-icon"><img src="https://www.baidu.com/favicon.ico" alt="天气查询图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.baidu.com';"></div>
+                    <div class="website-icon"><img src="https://www.baidu.com/favicon.ico" alt="天气查询图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">天气查询</div>
                         <div class="website-desc">百度天气提供全国各地的天气查询服务。</div>
@@ -858,7 +857,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.baidu.com/s?wd=%E5%A4%A9%E6%B0%94', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://translate.google.com" data-desc="谷歌翻译提供多种语言之间的翻译服务。">
-                    <div class="website-icon"><img src="https://translate.google.com/favicon.ico" alt="谷歌翻译图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://translate.google.com';"></div>
+                    <div class="website-icon"><img src="https://translate.google.com/favicon.ico" alt="谷歌翻译图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">谷歌翻译</div>
                         <div class="website-desc">谷歌翻译提供多种语言之间的翻译服务。</div>
@@ -866,7 +865,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://translate.google.com', '_blank');">前往</button>
                 </li>
                 <li class="website-item" data-url="https://www.12306.cn" data-desc="12306是中国铁路客户服务网站，提供火车票查询和购买服务。">
-                    <div class="website-icon"><img src="https://www.12306.cn/favicon.ico" alt="12306图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.12306.cn';"></div>
+                    <div class="website-icon"><img src="https://www.12306.cn/favicon.ico" alt="12306图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+';"></div>
                     <div class="website-info">
                         <div class="website-name">12306</div>
                         <div class="website-desc">12306是中国铁路客户服务网站，提供火车票查询和购买服务。</div>
@@ -1234,7 +1233,7 @@
             /* document.addEventListener('DOMContentLoaded', function() { */
             const websitesData = generateMoreWebsites();
             addWebsitesToDOM(websitesData);
-        }
+        // 此处代码可能因缺少对应的代码块开始部分而出现问题，需结合完整上下文确认。仅当前选择内容无法判断如何正确补全，若为多余的 `}`，可移除。若为缺失代码块，需补充完整代码逻辑。由于缺少更多信息，暂时移除该多余的 `}`。
 
         // 将网址数据添加到DOM
         function addWebsitesToDOM(data) {
@@ -1986,39 +1985,28 @@
         // 人机验证逻辑
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('humanVerificationModal');
-            const puzzlePiece = document.getElementById('puzzlePiece');
-            const sliderHandle = document.getElementById('sliderHandle');
-            const sliderTrack = document.getElementById('sliderTrack');
+            const verificationCheckbox = document.getElementById('verificationCheckbox');
+            const progressRing = document.getElementById('progressRing');
+            const progressCircle = document.getElementById('progressCircle');
             const verificationStatus = document.getElementById('verificationStatus');
-            const refreshCaptcha = document.getElementById('refreshCaptcha');
             const toolsContainer = document.getElementById('toolsContainer');
             const heroSection = document.querySelector('.hero');
+            const checkboxText = document.querySelector('.checkbox-text');
 
-            // 目标位置（随机生成在200-300px之间）
-            let targetPosition = Math.floor(Math.random() * 100) + 200;
-            let isDragging = false;
-            let initialX;
-            let initialLeft;
+            let isVerifying = false;
             let isVerified = false;
+            const verificationDuration = 5000; // 验证持续5秒
 
-            // 初始化验证界面
-            function initVerification() {
-                // 随机生成目标位置
-                targetPosition = Math.floor(Math.random() * 100) + 200;
-                // 重置滑块和拼图位置
-                sliderHandle.style.left = '0';
-                puzzlePiece.style.left = '20px';
-                // 重置状态
-                verificationStatus.textContent = '向右拖动滑块完成拼图';
-                verificationStatus.className = 'verification-status';
-                sliderHandle.classList.remove('verified');
-                isVerified = false;
+            // 计算圆的周长，用于进度环动画
+            const radius = 36;
+            const circumference = 2 * Math.PI * radius;
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            progressCircle.style.strokeDashoffset = circumference;
 
-                // 重新生成拼图背景和拼图块的随机图案
-                // 这里使用随机偏移来模拟不同的拼图
-                const randomOffsetX = Math.floor(Math.random() * 50) + 50;
-                const randomOffsetY = Math.floor(Math.random() * 50) + 50;
-                puzzlePiece.style.backgroundPosition = `${randomOffsetX}px ${randomOffsetY}px`;
+            // 更新进度环
+            function updateProgress(percent) {
+                const offset = circumference - percent / 100 * circumference;
+                progressCircle.style.strokeDashoffset = offset;
             }
 
             // 验证成功处理
@@ -2026,10 +2014,9 @@
                 isVerified = true;
                 verificationStatus.textContent = '验证成功！正在进入...';
                 verificationStatus.className = 'verification-status verification-success';
-                sliderHandle.classList.add('verified');
-                sliderHandle.innerHTML = '<span>✓</span>';
+                checkboxText.innerHTML = '✓ 验证已完成';
 
-                // 2秒后隐藏验证模态框
+                // 1秒后隐藏验证模态框
                 setTimeout(() => {
                     modal.style.display = 'none';
                     // 显示网站内容
@@ -2038,125 +2025,48 @@
                     setTimeout(() => {
                         toolsContainer.classList.add('visible');
                     }, 100);
-                }, 1500);
-            }
-
-            // 验证失败处理
-            function verifyFailed() {
-                verificationStatus.textContent = '验证失败，请重试';
-                verificationStatus.className = 'verification-status verification-error';
-                // 滑块和拼图回到初始位置
-                sliderHandle.style.left = '0';
-                puzzlePiece.style.left = '20px';
-                // 1秒后重置状态
-                setTimeout(() => {
-                    verificationStatus.textContent = '向右拖动滑块完成拼图';
-                    verificationStatus.className = 'verification-status';
                 }, 1000);
             }
 
-            // 鼠标按下事件
-            sliderHandle.addEventListener('mousedown', function(e) {
-                if (isVerified) return;
-                isDragging = true;
-                initialX = e.clientX;
-                initialLeft = parseInt(sliderHandle.style.left) || 0;
-                sliderHandle.style.transition = 'none';
-                puzzlePiece.style.transition = 'none';
+            // 处理验证过程
+            function startVerification() {
+                if (isVerifying || isVerified) return;
+                
+                isVerifying = true;
+                verificationCheckbox.classList.add('clicked');
+                checkboxText.innerHTML = '正在进行验证...';
+                progressRing.classList.add('visible');
+                verificationStatus.textContent = '验证进行中，请稍候...';
+
+                let startTime = Date.now();
+                let interval;
+
+                // 创建进度更新间隔
+                interval = setInterval(() => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min((elapsed / verificationDuration) * 100, 100);
+                    updateProgress(progress);
+                    
+                    // 更新倒计时显示
+                    const remainingSeconds = Math.ceil((verificationDuration - elapsed) / 1000);
+                    verificationStatus.textContent = `验证进行中，请稍候... (${remainingSeconds}s)`;
+
+                    // 验证完成
+                    if (elapsed >= verificationDuration) {
+                        clearInterval(interval);
+                        verifySuccess();
+                    }
+                }, 100);
+            }
+
+            // 添加点击事件监听
+            verificationCheckbox.addEventListener('click', startVerification);
+            
+            // 移动端触摸事件
+            verificationCheckbox.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // 阻止默认行为
+                startVerification();
             });
-
-            // 触摸开始事件（移动设备）
-            sliderHandle.addEventListener('touchstart', function(e) {
-                if (isVerified) return;
-                isDragging = true;
-                initialX = e.touches[0].clientX;
-                initialLeft = parseInt(sliderHandle.style.left) || 0;
-                sliderHandle.style.transition = 'none';
-                puzzlePiece.style.transition = 'none';
-            });
-
-            // 鼠标移动事件
-            document.addEventListener('mousemove', function(e) {
-                if (!isDragging) return;
-                e.preventDefault();
-                const currentX = e.clientX;
-                const diffX = currentX - initialX;
-                let newLeft = initialLeft + diffX;
-
-                // 限制在轨道内
-                if (newLeft < 0) newLeft = 0;
-                if (newLeft > sliderTrack.offsetWidth - sliderHandle.offsetWidth) {
-                    newLeft = sliderTrack.offsetWidth - sliderHandle.offsetWidth;
-                }
-
-                // 更新滑块位置
-                sliderHandle.style.left = newLeft + 'px';
-                // 更新拼图位置（保持比例）
-                const puzzleContainer = document.getElementById('puzzleContainer');
-            const puzzleMaxLeft = puzzleContainer.offsetWidth - puzzlePiece.offsetWidth;
-                const puzzleRatio = puzzleMaxLeft / (sliderTrack.offsetWidth - sliderHandle.offsetWidth);
-                puzzlePiece.style.left = (20 + newLeft * puzzleRatio) + 'px';
-            });
-
-            // 触摸移动事件（移动设备）
-            document.addEventListener('touchmove', function(e) {
-                if (!isDragging) return;
-                e.preventDefault();
-                const currentX = e.touches[0].clientX;
-                const diffX = currentX - initialX;
-                let newLeft = initialLeft + diffX;
-
-                // 限制在轨道内
-                if (newLeft < 0) newLeft = 0;
-                if (newLeft > sliderTrack.offsetWidth - sliderHandle.offsetWidth) {
-                    newLeft = sliderTrack.offsetWidth - sliderHandle.offsetWidth;
-                }
-
-                // 更新滑块位置
-                sliderHandle.style.left = newLeft + 'px';
-                // 更新拼图位置（保持比例）
-                const puzzleMaxLeft = puzzleContainer.offsetWidth - puzzlePiece.offsetWidth;
-                const puzzleRatio = puzzleMaxLeft / (sliderTrack.offsetWidth - sliderHandle.offsetWidth);
-                puzzlePiece.style.left = (20 + newLeft * puzzleRatio) + 'px';
-            });
-
-            // 鼠标释放事件
-            document.addEventListener('mouseup', function() {
-                if (!isDragging) return;
-                isDragging = false;
-                sliderHandle.style.transition = 'left 0.2s ease';
-                puzzlePiece.style.transition = 'left 0.2s ease';
-
-                // 检查是否验证成功（允许±10px的误差）
-                const currentPosition = parseInt(sliderHandle.style.left) || 0;
-                if (Math.abs(currentPosition - targetPosition) <= 10) {
-                    verifySuccess();
-                } else if (currentPosition > 0) {
-                    verifyFailed();
-                }
-            });
-
-            // 触摸结束事件（移动设备）
-            document.addEventListener('touchend', function() {
-                if (!isDragging) return;
-                isDragging = false;
-                sliderHandle.style.transition = 'left 0.2s ease';
-                puzzlePiece.style.transition = 'left 0.2s ease';
-
-                // 检查是否验证成功（允许±10px的误差）
-                const currentPosition = parseInt(sliderHandle.style.left) || 0;
-                if (Math.abs(currentPosition - targetPosition) <= 10) {
-                    verifySuccess();
-                } else if (currentPosition > 0) {
-                    verifyFailed();
-                }
-            });
-
-            // 刷新验证码
-            refreshCaptcha.addEventListener('click', initVerification);
-
-            // 初始化验证
-            initVerification();
 
             // 隐藏网站内容，直到验证通过
             heroSection.style.display = 'none';
