@@ -322,6 +322,27 @@
             border-radius: 8px;
         }
 
+        /* 下载按钮 */
+        .download-button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .download-button:hover {
+            background: #d6304a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+
         /* 向下箭头 */
         .scroll-arrow {
             position: absolute;
@@ -614,6 +635,7 @@
         <!-- 动态生成的波纹元素将通过JS添加 -->
         <h1 class="title" id="mainTitle">载熙工具箱</h1>
         <p class="hero-subtitle">一站式实用工具集合，提供转换工具、系统工具、编码工具、镜像大全、网址大全等多种实用功能，满足您的各种需求。</p>
+        <button class="download-button" onclick="window.open('https://example.com/download', '_blank')">下载工具箱</button>
         <div class="scroll-arrow" id="scrollArrow"></div>
     </header>
 
@@ -721,7 +743,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.dida365.com/download', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://shimo.im/download" data-desc="石墨文档是一款支持多人实时协作的云端办公软件，支持文档、表格、幻灯片等多种格式，跨平台同步。">
-                    <div class="website-icon"><img src="https://shimo.im/favicon.ico" alt="石墨文档图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://shimo.im';"></div>
+                    <div class="website-icon"><img src="https://shimo.im/favicon.ico" alt="石墨文档图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+'; this.onerror=null;" crossorigin="anonymous"></div>
                     <div class="website-info">
                         <div class="website-name">石墨文档</div>
                         <div class="website-desc">石墨文档是一款支持多人实时协作的云端办公软件，支持文档、表格、幻灯片等多种格式，跨平台同步。</div>
@@ -729,7 +751,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://shimo.im/download', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://www.processon.com/" data-desc="ProcessOn是一款在线作图平台，支持流程图、思维导图、原型图、UML等多种图表类型，支持多人实时协作。">
-                    <div class="website-icon"><img src="https://www.processon.com/favicon.ico" alt="ProcessOn图标" onerror="this.src='https://www.google.com/s2/favicons?domain=https://www.processon.com';"></div>
+                    <div class="website-icon"><img src="https://www.processon.com/favicon.ico" alt="ProcessOn图标" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+'; this.onerror=null;" crossorigin="anonymous"></div>
                     <div class="website-info">
                         <div class="website-name">ProcessOn</div>
                         <div class="website-desc">ProcessOn是一款在线作图平台，支持流程图、思维导图、原型图、UML等多种图表类型，支持多人实时协作。</div>
@@ -745,7 +767,7 @@
                     <button type="button" class="visit-button" onclick="event.stopPropagation(); window.open('https://www.yinxiang.com/', '_blank');">下载</button>
                 </li>
                 <li class="website-item" data-url="https://docs.qq.com/" data-desc="腾讯文档是一款可协作的云端Office工具，支持多人实时编辑文档、表格、幻灯片等，无需下载客户端，打开网页即可使用。">
-                    <div class="website-icon"><img src="https://docs.qq.com/favicon.ico" alt="腾讯文档图标" crossorigin="anonymous" onerror="this.src='https://www.google.com/s2/favicons?domain=https://docs.qq.com'; this.onerror=function(){this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+'; this.onerror=null;};"></div>
+                    <div class="website-icon"><img src="https://docs.qq.com/favicon.ico" alt="腾讯文档图标" crossorigin="anonymous" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMC00LjQ4LTEwLTEwLTEweiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTEgMTJMMTYgMTdsLTUgNXoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+'; this.onerror=null;"></div>
                     <div class="website-info">
                         <div class="website-name">腾讯文档</div>
                         <div class="website-desc">腾讯文档是一款可协作的云端Office工具，支持多人实时编辑文档、表格、幻灯片等，无需下载客户端，打开网页即可使用。</div>
@@ -1812,10 +1834,10 @@
                 downloadLink: ''
             },
             {
-                name: '微软激活工具',
+                name: '微软激活工具(提取密钥:6hyr)',
                 description: '用于激活Windows系统的工具',
                 icon: '🔑',
-                downloadLink: 'https://workdrive.zoho.com.cn/file/w86hs0cfe35763bcf4b5abc3bb996cdc1581c'
+                downloadLink: 'https://wwyr.lanzouw.com/iYRpu349b9na'
             }
         ];
 
