@@ -11,7 +11,7 @@ import webview  # 必须安装: pip install pywebview
 
 # --- 配置与常量 ---
 # 请确保 Key 是有效的。如果 Key 本身有问题，也会导致 400 或 401 错误。
-API_KEY = "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"
+API_KEY = "API-KEY"
 SITE_URL = "https://zaixi-ai.tool" # 按照要求使用你的站点URL，或者保留 openrouter.ai
 SITE_NAME = "ZaiXi AI CMD Tool GUI"
 
@@ -2427,3 +2427,4 @@ if __name__ == '__main__':
     )
     # 启动 GUI - 关闭调试模式
     webview.start(debug=False)
+
