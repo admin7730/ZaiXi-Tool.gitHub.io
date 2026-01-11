@@ -1,6 +1,6 @@
 # 载熙AI 领航工具
 
-![载熙AI 领航工具](https://admin7730.github.io/zaixiAI.gitHub.io/)
+![载熙AI 领航工具]
 
 ## 项目简介
 
